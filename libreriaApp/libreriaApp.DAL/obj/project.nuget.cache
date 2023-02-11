@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vyUq9Pc7UlCN9XEyZ43wC3hYzUCuZIlZEUys6QCamv+JG/gjIej1A56XDO0/FfAsK/J7rJrd9h1I43VuJe+p5A==",
+  "dgSpecHash": "lEtw4HmWqqsjH8cz8fDOoL/ViFNg5iImizZWHuzj/wRsc/EiEcPINeWJb949kVO8tlG67/85UmIgRNyN83sxOA==",
   "success": true,
-  "projectFilePath": "C:\\projects\\libreriaApp\\libreriaApp.DAL\\libreriaApp.DAL.csproj",
+  "projectFilePath": "C:\\Projects\\libreriaApp\\libreriaApp.DAL\\libreriaApp.DAL.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
