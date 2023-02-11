@@ -209,24 +209,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\albie\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Omar Sanchez\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\projects\\libreriaApp\\libreriaApp.API\\libreriaApp.API.csproj",
+      "projectUniqueName": "C:\\projecs\\libreriaApp\\libreriaApp\\libreriaApp.API\\libreriaApp.API.csproj",
       "projectName": "libreriaApp.API",
-      "projectPath": "C:\\projects\\libreriaApp\\libreriaApp.API\\libreriaApp.API.csproj",
-      "packagesPath": "C:\\Users\\albie\\.nuget\\packages\\",
-      "outputPath": "C:\\projects\\libreriaApp\\libreriaApp.API\\obj\\",
+      "projectPath": "C:\\projecs\\libreriaApp\\libreriaApp\\libreriaApp.API\\libreriaApp.API.csproj",
+      "packagesPath": "C:\\Users\\Omar Sanchez\\.nuget\\packages\\",
+      "outputPath": "C:\\projecs\\libreriaApp\\libreriaApp\\libreriaApp.API\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\albie\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Omar Sanchez\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -234,7 +229,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

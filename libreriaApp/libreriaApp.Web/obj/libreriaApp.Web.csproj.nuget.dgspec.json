@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\projects\\libreriaApp\\libreriaApp.Web\\libreriaApp.Web.csproj": {}
+    "C:\\projecs\\libreriaApp\\libreriaApp\\libreriaApp.Web\\libreriaApp.Web.csproj": {}
   },
   "projects": {
-    "C:\\projects\\libreriaApp\\libreriaApp.Web\\libreriaApp.Web.csproj": {
+    "C:\\projecs\\libreriaApp\\libreriaApp\\libreriaApp.Web\\libreriaApp.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\projects\\libreriaApp\\libreriaApp.Web\\libreriaApp.Web.csproj",
+        "projectUniqueName": "C:\\projecs\\libreriaApp\\libreriaApp\\libreriaApp.Web\\libreriaApp.Web.csproj",
         "projectName": "libreriaApp.Web",
-        "projectPath": "C:\\projects\\libreriaApp\\libreriaApp.Web\\libreriaApp.Web.csproj",
-        "packagesPath": "C:\\Users\\albie\\.nuget\\packages\\",
-        "outputPath": "C:\\projects\\libreriaApp\\libreriaApp.Web\\obj\\",
+        "projectPath": "C:\\projecs\\libreriaApp\\libreriaApp\\libreriaApp.Web\\libreriaApp.Web.csproj",
+        "packagesPath": "C:\\Users\\Omar Sanchez\\.nuget\\packages\\",
+        "outputPath": "C:\\projecs\\libreriaApp\\libreriaApp\\libreriaApp.Web\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\albie\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Omar Sanchez\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,6 +39,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
