@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "PDYk809bfWYaEOFErHSX/9PaozRgZmEVDIsXzGAmHUw=",
+  "Source": "libreriaApp.Api",
+  "BasePath": "_content/libreriaApp.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

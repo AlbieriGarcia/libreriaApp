@@ -1,0 +1,97 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETStandard,Version=v2.1": {
+      "libreriaApp.DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/libreriaApp.DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/libreriaApp.DAL.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "libreriaApp.DAL/1.0.0": {
+      "type": "project",
+      "path": "../libreriaApp.DAL/libreriaApp.DAL.csproj",
+      "msbuildProject": "../libreriaApp.DAL/libreriaApp.DAL.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETStandard,Version=v2.1": [
+      "libreriaApp.DAL >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\ianmo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\projects\\libreriaAppSol\\libreriaApp\\libreriaApp.SL\\libreriaApp.SL.csproj",
+      "projectName": "libreriaApp.SL",
+      "projectPath": "C:\\projects\\libreriaAppSol\\libreriaApp\\libreriaApp.SL\\libreriaApp.SL.csproj",
+      "packagesPath": "C:\\Users\\ianmo\\.nuget\\packages\\",
+      "outputPath": "C:\\projects\\libreriaAppSol\\libreriaApp\\libreriaApp.SL\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\ianmo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netstandard2.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "projectReferences": {
+            "C:\\projects\\libreriaAppSol\\libreriaApp\\libreriaApp.DAL\\libreriaApp.DAL.csproj": {
+              "projectPath": "C:\\projects\\libreriaAppSol\\libreriaApp\\libreriaApp.DAL\\libreriaApp.DAL.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netstandard2.1": {
+        "targetAlias": "netstandard2.1",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "NETStandard.Library": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

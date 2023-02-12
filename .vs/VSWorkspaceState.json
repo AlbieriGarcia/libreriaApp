@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\libreriaApp",
+    "\\libreriaApp\\libreriaApp.WEB\\Controllers"
   ],
   "PreviewInSolutionExplorer": false
 }

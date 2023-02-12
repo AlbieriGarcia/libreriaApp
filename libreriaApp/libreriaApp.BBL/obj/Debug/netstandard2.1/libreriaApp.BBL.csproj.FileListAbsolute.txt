@@ -1,0 +1,10 @@
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\bin\Debug\netstandard2.1\libreriaApp.BBL.deps.json
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\bin\Debug\netstandard2.1\libreriaApp.BBL.dll
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\bin\Debug\netstandard2.1\libreriaApp.BBL.pdb
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\obj\Debug\netstandard2.1\libreriaApp.BBL.csproj.AssemblyReference.cache
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\obj\Debug\netstandard2.1\libreriaApp.BBL.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\obj\Debug\netstandard2.1\libreriaApp.BBL.AssemblyInfoInputs.cache
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\obj\Debug\netstandard2.1\libreriaApp.BBL.AssemblyInfo.cs
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\obj\Debug\netstandard2.1\libreriaApp.BBL.csproj.CoreCompileInputs.cache
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\obj\Debug\netstandard2.1\libreriaApp.BBL.dll
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.BBL\obj\Debug\netstandard2.1\libreriaApp.BBL.pdb

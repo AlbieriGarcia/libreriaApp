@@ -1,0 +1,10 @@
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\bin\Debug\netstandard2.1\libreriaApp.SL.deps.json
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\bin\Debug\netstandard2.1\libreriaApp.SL.dll
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\bin\Debug\netstandard2.1\libreriaApp.SL.pdb
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\obj\Debug\netstandard2.1\libreriaApp.SL.csproj.AssemblyReference.cache
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\obj\Debug\netstandard2.1\libreriaApp.SL.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\obj\Debug\netstandard2.1\libreriaApp.SL.AssemblyInfoInputs.cache
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\obj\Debug\netstandard2.1\libreriaApp.SL.AssemblyInfo.cs
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\obj\Debug\netstandard2.1\libreriaApp.SL.csproj.CoreCompileInputs.cache
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\obj\Debug\netstandard2.1\libreriaApp.SL.dll
+C:\projects\libreriaApp\libreriaAppSol\libreriaApp.SL\obj\Debug\netstandard2.1\libreriaApp.SL.pdb

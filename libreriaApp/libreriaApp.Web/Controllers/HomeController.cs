@@ -1,13 +1,8 @@
-﻿using libreriaApp.Web.Models;
+﻿using libreriaApp.WEB.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace libreriaApp.Web.Controllers
+namespace libreriaApp.WEB.Controllers
 {
     public class HomeController : Controller
     {
