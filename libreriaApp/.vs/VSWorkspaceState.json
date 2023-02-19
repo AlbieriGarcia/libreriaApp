@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\libreriaApp.BLL",
+    "\\libreriaApp.DAL",
+    "\\libreriaApp.DAL\\bin",
+    "\\libreriaApp.Web",
+    "\\libreriaApp.Web\\Controllers",
+    "\\libreriaApp.Web\\Views",
+    "\\libreriaApp.Web\\Views\\Shared"
+  ],
+  "SelectedNode": "\\libreriaApp.sln",
+  "PreviewInSolutionExplorer": false
+}
