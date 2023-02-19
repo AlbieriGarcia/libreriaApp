@@ -18,7 +18,7 @@ namespace libreriaApp.Web.Controllers
                 { Id = 1,
                 Name = "Albert Whitman & Company",
                 City = "New York",
-                State = "Estados Unidos de America",
+                State = "MA",
                 Country = "New York"
                 },
 
@@ -26,7 +26,7 @@ namespace libreriaApp.Web.Controllers
                 { Id = 2,
                 Name = "Bancroft Press",
                 City = "New York",
-                State = "Estados Unidos de America",
+                State = "DC",
                 Country = "New York"
                 },
 
@@ -34,7 +34,7 @@ namespace libreriaApp.Web.Controllers
                 { Id = 3,
                 Name = "Regal House Publishing",
                 City = "New York",
-                State = "Estados Unidos de America",
+                State = "CA",
                 Country = "New York"
                 },
 
