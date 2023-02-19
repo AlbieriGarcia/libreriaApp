@@ -15,7 +15,7 @@ namespace libreriaApp.DAL.Repository
         private readonly ILogger<PublisherRepository> logger;
 
         public PublisherRepository(LibreriaContext context, 
-                                    ILogger <PublisherRepository> logger) 
+                                    ILogger <PublisherRepository> logger)
         {
             this.context = context;
             this.logger = logger;
