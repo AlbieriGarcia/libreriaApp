@@ -8,12 +8,12 @@ namespace libreriaApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PublishersController : ControllerBase
+    public class PublisherController : ControllerBase
     {
         private readonly IPublisherRepository publisherRepository;
-        public PublishersController(IPublisherRepository publisherRepository) 
+        public PublisherController(IPublisherRepository PublisherRepository) 
         {
-            this.publisherRepository = publisherRepository;
+            this.publisherRepository = PublisherRepository;
         }
         [HttpGet]
         public IActionResult Get()
@@ -33,31 +33,34 @@ namespace libreriaApp.API.Controllers
         public IActionResult Post([FromBody] PublisherAddRequest publisherAdd)
         {
 
-            publishers publishers = new publishers()
+            Publisher publisher = new Publisher
             {
                 pub_id = publisherAdd.pub_id,
                 pub_name = publisherAdd.pub_name,
+                city = publisherAdd.city,
+                state = publisherAdd.state,
+                country = publisherAdd.country,
                 CreationDate = publisherAdd.CreationDate,
                 CreationUser = publisherAdd.CreationUser,
-                country = publisherAdd.country,
+                
 
             };
 
-            this.publisherRepository.Save(publishers);
+            this.publisherRepository.Save(publisher);
             return Ok();
         }
 
         [HttpPut("Update")]
-        public IActionResult Put(publishers publishers)
+        public IActionResult Put([FromBody] Publisher publisher)
         {
-            this.publisherRepository.Update(publishers);
+            this.publisherRepository.Update(publisher);
             return Ok();
         }
 
         [HttpDelete("Remove")]
-        public IActionResult Delete(publishers publishers)
+        public IActionResult Remove([FromBody] Publisher publisher)
         {
-            this.publisherRepository.Remove(publishers);
+            this.publisherRepository.Remove(publisher);
             return Ok();
         }
     }

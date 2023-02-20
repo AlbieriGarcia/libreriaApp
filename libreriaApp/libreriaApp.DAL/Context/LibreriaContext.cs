@@ -13,7 +13,7 @@ namespace libreriaApp.DAL.Context
         
         }
         #region "Publishers"
-        public DbSet<publishers> Publishers { get; set; }
+        public DbSet<Publisher> publishers { get; set; }
         #endregion
     }
 }

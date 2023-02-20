@@ -4,10 +4,10 @@ namespace libreriaApp.DAL.Core
 {
     public abstract class AuditEntity
     {
-        public AuditEntity() 
-        { 
-           this.CreationDate= DateTime.Now;
-           this.Deleted = false;
+        public AuditEntity()
+        {
+            this.CreationDate = DateTime.Now;
+            this.Deleted = false;
         }
         public int? CreationUser { get; set; }
         public DateTime? CreationDate { get; set; }
@@ -15,6 +15,6 @@ namespace libreriaApp.DAL.Core
         public DateTime? ModifyDate { get; set; }
         public int? UserDeleted { get; set; }
         public DateTime? DeletedDate { get; set; }
-        public bool? Deleted { get; set; }
+        public bool Deleted { get; set; }
     }
 }

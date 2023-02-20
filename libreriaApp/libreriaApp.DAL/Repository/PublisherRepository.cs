@@ -11,43 +11,41 @@ namespace libreriaApp.DAL.Repository
 {
     public class PublisherRepository : IPublisherRepository
     {
-        private readonly LibreriaContext context;
+        private readonly LibreriaContext libreriaContext;
         private readonly ILogger<PublisherRepository> logger;
-
-        public PublisherRepository(LibreriaContext context, 
-                                    ILogger <PublisherRepository> logger)
+        public PublisherRepository(LibreriaContext libreriaContext, ILogger<PublisherRepository> logger)
         {
-            this.context = context;
+            this.libreriaContext = libreriaContext;
             this.logger = logger;
         }
         public bool Exists(string name)
         {
-            return this.context.Publishers.Any(st => st.pub_name == name);
+            return this.libreriaContext.publishers.Any(st => st.pub_name == name);
         }
 
-        public List<publishers> GetAll()
+        public List<Publisher> GetAll()
         {
-            return this.context.Publishers.ToList();
+            return this.libreriaContext.publishers.Where(dep => !dep.Deleted).ToList();
         }
 
-        public publishers GetById(int publishersId)
+        public Publisher GetById(int publisher)
         {
-            return this.context.Publishers.Find(publishersId);
+            return this.libreriaContext.publishers.Find(publisher);
         }
 
-        public void Remove(publishers publishers)
+        public void Remove(Publisher publisher)
         {
             try
             {
-                publishers publishersToRemove = this.GetById(publishers.pub_id);
+                Publisher publisherToRemove = this.GetById(publisher.pub_id);
 
-                publishersToRemove.Deleted = true;
-                publishersToRemove.DeletedDate = DateTime.Now;
-                publishersToRemove.UserDeleted = 1;
+                publisherToRemove.Deleted = true;
+                publisherToRemove.DeletedDate = DateTime.Now;
+                publisherToRemove.UserDeleted = 1;
 
 
-                this.context.Publishers.Update(publishersToRemove);
-                this.context.SaveChanges();
+                this.libreriaContext.publishers.Update(publisherToRemove);
+                this.libreriaContext.SaveChanges();
 
             }
             catch (Exception ex) 
@@ -56,20 +54,20 @@ namespace libreriaApp.DAL.Repository
             }
         }
 
-        public void Save(publishers publishers)
+        public void Save(Publisher publisher)
         {
             try
             {
-                publishers publisherToAdd = new publishers()
+                Publisher publisherToAdd = new Publisher()
                 {
-                    pub_name = publishers.pub_name,
-                    country = publishers.country,
+                    pub_name = publisher.pub_name,
+                    country = publisher.country,
                     CreationDate = DateTime.Now,
-                    CreationUser = publishers.CreationUser,
+                    CreationUser = publisher.CreationUser,
                 };
 
-                this.context.Publishers.Add(publisherToAdd);
-                this.context.SaveChanges();
+                this.libreriaContext.publishers.Add(publisherToAdd);
+                this.libreriaContext.SaveChanges();
             }
             catch (Exception ex)
 
@@ -79,20 +77,20 @@ namespace libreriaApp.DAL.Repository
             }
         }
 
-        public void Update(publishers publishers)
+        public void Update(Publisher publisher)
         {
             try
             {
-                publishers publishersToUpdate = this.GetById(publishers.pub_id);
+                Publisher publisherToUpdate = this.GetById(publisher.pub_id);
 
-                publishersToUpdate.pub_id = publishers.pub_id;
-                publishersToUpdate.pub_name = publishers.pub_name;
-                publishersToUpdate.country = publishers.country;
-                publishersToUpdate.ModifyDate = DateTime.Now;
-                publishersToUpdate.UserMod = publishers.UserMod;
+                publisherToUpdate.pub_id = publisher.pub_id;
+                publisherToUpdate.pub_name = publisher.pub_name;
+                publisherToUpdate.country = publisher.country;
+                publisherToUpdate.ModifyDate = DateTime.Now;
+                publisherToUpdate.UserMod = publisher.UserMod;
 
-                this.context.Publishers.Update(publishersToUpdate);
-                this.context.SaveChanges();
+                this.libreriaContext.publishers.Update(publisherToUpdate);
+                this.libreriaContext.SaveChanges();
             }
             catch (Exception ex) 
             {
