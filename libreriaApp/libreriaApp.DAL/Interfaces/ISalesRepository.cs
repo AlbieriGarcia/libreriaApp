@@ -6,11 +6,11 @@ namespace libreriaApp.DAL.Interfaces
 {
     public interface ISalesRepository
     {
-        void Save(Sales sales);
-        void Update(Sales sales);
-        void Remove(Sales sales);
-        Sales GetById(string Sales);
+        Sales GetById(string Sale);
         List<Sales> GetAll();
+        void Save(Sales Sale);
+        void Update(Sales  Sale);
+        void Remove(Sales Sale);
         bool Exists(string name);
 
     }

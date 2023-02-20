@@ -43,12 +43,12 @@ namespace libreriaApp.DAL.Repositories
             {
                 Sales salesToRemove = this.GetById(Sale.stor_id);
 
-                salesToRemove.Deleted = true;
+                salesToRemove.Deleted = 0;
                 salesToRemove.DeletedDate = DateTime.Now;
                 salesToRemove.UserDeleted = Sale.UserDeleted;
 
 
-                this.LibreriaContext.sales.Update(salesToRemove);
+                this.LibreriaContext.Remove(salesToRemove);
                 this.LibreriaContext.SaveChanges();
 
 
@@ -75,7 +75,7 @@ namespace libreriaApp.DAL.Repositories
                 };
 
 
-                this.LibreriaContext.sales.Add(salesToAdd);
+                this.LibreriaContext.Add(salesToAdd);
                 this.LibreriaContext.SaveChanges();
 
             }
@@ -99,7 +99,7 @@ namespace libreriaApp.DAL.Repositories
                 salesToUpdate.ord_num = Sale.ord_num;
 
 
-                this.LibreriaContext.sales.Update(salesToUpdate);
+                this.LibreriaContext.Update(salesToUpdate);
                 this.LibreriaContext.SaveChanges();
             }
             catch (Exception ex)
@@ -108,7 +108,6 @@ namespace libreriaApp.DAL.Repositories
                 this.Logger.LogError($"Error al actualizando {ex.Message}", ex.ToString());
             }
         }
-
     }
 
 }

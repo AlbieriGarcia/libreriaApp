@@ -11,9 +11,9 @@ namespace libreriaApp.DAL.Context
         {
         }
         
-        #region "Ventas"
-        public DbSet<Sales> sales { get; set; }
-        public object Sales { get; internal set; }
+        #region "Registros"
+        public DbSet<Sales>? sales { get; set; }
+        public object? Sales { get; internal set; }
         #endregion
 
     }

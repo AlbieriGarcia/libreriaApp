@@ -18,11 +18,13 @@ namespace libreriaApp.API.Controllers
         {
             this.SalesRepository = SalesRepository;
         }    
- 
+        
         [HttpGet]
-        public IEnumerable<Sales> Get()
+        public IActionResult Get()
         {
-            return this.SalesRepository.GetAll();
+            var Sale = SalesRepository.GetAll();
+            return Ok(Sale);
+               
         }
 
         [HttpGet("{id}")]
@@ -31,19 +33,20 @@ namespace libreriaApp.API.Controllers
             return this.SalesRepository.GetById(id);
         }
         [HttpPost("Save")]
-        public void Post([FromBody] Sales sales)
+        public void Post([FromBody] Sales Sale)
         {
-            this.SalesRepository.Save(sales);
+            this.SalesRepository.Save(Sale);
         }
         [HttpPut("Update")]
-        public void Put(Sales sales)
+        public void Put(Sales Sale)
         {
-            this.SalesRepository.Update(sales);
+            this.SalesRepository.Update(Sale);
         }
         [HttpDelete("Remove")]
-        public void Delete(Sales sales)
+        public void Delete(Sales Sale)
         {
-            this.SalesRepository.Remove(sales);
+            this.SalesRepository.Remove(Sale);
         }
+        
     }
 }

@@ -7,14 +7,14 @@ namespace libreriaApp.DAL.Core
         public AuditEntity()
         {
             this.CreationDate = DateTime.Now;
-            this.Deleted = false;
+            this.Deleted = 1;
         }
-        public int? CreationUser { get; set; }
+        public int CreationUser { get; set; }
         public DateTime? CreationDate { get; set; }
         public int? UserMod { get; set; }
         public DateTime? ModifyDate { get; set; }
         public int? UserDeleted { get; set; }
         public DateTime? DeletedDate { get; set; }
-        public bool? Deleted { get; set; }
+        public int? Deleted { get; set; }
     }
 }
