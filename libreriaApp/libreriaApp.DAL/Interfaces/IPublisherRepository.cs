@@ -8,7 +8,7 @@ namespace libreriaApp.DAL.Interfaces
         void Save(Publisher publisher);
         void Update(Publisher publisher);
         void Remove(Publisher publisher);
-        Publisher GetById(int publisher);
+        Publisher GetById(string publisher);
         List<Publisher> GetAll();
         bool Exists(string name);
 

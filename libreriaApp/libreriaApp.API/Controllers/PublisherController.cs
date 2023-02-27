@@ -23,7 +23,7 @@ namespace libreriaApp.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(string id)
         {
             var publisher = this.publisherRepository.GetById(id);
             return Ok(publisher);
@@ -40,9 +40,6 @@ namespace libreriaApp.API.Controllers
                 city = publisherAdd.city,
                 state = publisherAdd.state,
                 country = publisherAdd.country,
-                CreationDate = publisherAdd.CreationDate,
-                CreationUser = publisherAdd.CreationUser,
-                
 
             };
 

@@ -18,3 +18,13 @@ C:\proyecs\Repos\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.
 C:\proyecs\Repos\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.csproj.CoreCompileInputs.cache
 C:\proyecs\Repos\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.dll
 C:\proyecs\Repos\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.pdb
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.csproj.AssemblyReference.cache
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.AssemblyInfoInputs.cache
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.AssemblyInfo.cs
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.csproj.CoreCompileInputs.cache
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.dll
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\obj\Debug\netstandard2.1\libreriaApp.DAL.pdb
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\bin\Debug\netstandard2.1\libreriaApp.DAL.deps.json
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\bin\Debug\netstandard2.1\libreriaApp.DAL.dll
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.DAL\bin\Debug\netstandard2.1\libreriaApp.DAL.pdb

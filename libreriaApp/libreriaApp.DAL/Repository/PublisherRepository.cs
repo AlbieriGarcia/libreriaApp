@@ -25,10 +25,10 @@ namespace libreriaApp.DAL.Repository
 
         public List<Publisher> GetAll()
         {
-            return this.libreriaContext.publishers.Where(dep => !dep.Deleted).ToList();
+            return this.libreriaContext.publishers.ToList();
         }
 
-        public Publisher GetById(int publisher)
+        public Publisher GetById(string publisher)
         {
             return this.libreriaContext.publishers.Find(publisher);
         }
@@ -39,7 +39,7 @@ namespace libreriaApp.DAL.Repository
             {
                 Publisher publisherToRemove = this.GetById(publisher.pub_id);
 
-                publisherToRemove.Deleted = true;
+                publisherToRemove.Deleted = 1;
                 publisherToRemove.DeletedDate = DateTime.Now;
                 publisherToRemove.UserDeleted = 1;
 
@@ -64,6 +64,8 @@ namespace libreriaApp.DAL.Repository
                     country = publisher.country,
                     CreationDate = DateTime.Now,
                     CreationUser = publisher.CreationUser,
+                    state = publisher.state,
+                    city= publisher.city,
                 };
 
                 this.libreriaContext.publishers.Add(publisherToAdd);
