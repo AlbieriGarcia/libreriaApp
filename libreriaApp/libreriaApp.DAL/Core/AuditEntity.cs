@@ -9,7 +9,7 @@ namespace libreriaApp.DAL.Core
        public AuditEntity()
         {
             this.CreationDate = DateTime.Now;
-            this.Deleted = false;
+            this.Deleted = 0;
         }
         public int CreationUser { get; set; }
         public DateTime CreationDate { get; set; }
@@ -17,6 +17,6 @@ namespace libreriaApp.DAL.Core
         public DateTime? ModifyDate { get; set; }
         public int? UserDeletd { get; set; }
         public DateTime? DeletedDate { get; set; }
-        public bool Deleted { get; set; }
+        public int? Deleted { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace libreriaApp.DAL.Interfaces
         void Save(Authors authors);
         void Update(Authors authors);
         void Remove(Authors authors);
-        Authors GetById(int authorsid);
+        Authors GetById(string authorsid);
         List<Authors> GetAll();
         bool Exists(string au_fname);
 

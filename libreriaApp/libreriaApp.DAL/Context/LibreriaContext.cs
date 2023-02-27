@@ -5,6 +5,8 @@ namespace libreriaApp.DAL.Context
 {
     public class LibreriaContext : DbContext
     {
+        public LibreriaContext() { 
+        }
       public LibreriaContext(DbContextOptions<LibreriaContext> options) : base(options)
         {
             

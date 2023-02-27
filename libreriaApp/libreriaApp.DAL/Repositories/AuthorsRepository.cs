@@ -27,11 +27,10 @@ namespace libreriaApp.DAL.Repositories
 
         public List<Authors> GetAll()
         {
-            return this.context.Authors.
-                    Where(aut => !aut.Deleted).ToList();
+            return this.context.Authors.ToList();
         }
 
-        public Authors GetById(int authorsid)
+        public Authors GetById(string authorsid)
         {
             return this.context.Authors.Find(authorsid);
         }
@@ -40,12 +39,12 @@ namespace libreriaApp.DAL.Repositories
         {
             try
             {
-                Authors authorsToRemove = this.GetById(Convert.ToInt32(authors.au_id));
+                Authors authorsToRemove = this.GetById(authors.au_id);
                 authorsToRemove.DeletedDate = DateTime.Now;
                 authorsToRemove.UserDeletd = 1;
-                authorsToRemove.Deleted = true;
+                authorsToRemove.Deleted = 1;
 
-                this.context.Authors.Update(authorsToRemove);
+                this.context.Authors.Remove(authorsToRemove);
                 this.context.SaveChanges();
             }
             catch (Exception ex)
@@ -64,20 +63,21 @@ namespace libreriaApp.DAL.Repositories
                     CreationDate = DateTime.Now,
                     CreationUser = authors.CreationUser,
                     au_id = authors.au_id,
+                    au_lname = authors.au_lname,
                     au_fname = authors.au_fname,
                     phone = authors.phone,
                     address = authors.address,
                     city = authors.city,
                     state = authors.state,
                     zip = authors.zip,
-                    contact = authors.contact,
+                    contract = authors.contract,
                 };
                 this.context.Authors.Add(authorsToAdd);
                 this.context.SaveChanges();
             }
             catch (Exception ex)
             {
-                this.ilogger.LogError($"Error removiendo el autor{ex.Message}", ex.ToString());
+                this.ilogger.LogError($"Error al agregar el autor{ex.Message}", ex.ToString());
 
             }
         }
@@ -86,7 +86,7 @@ namespace libreriaApp.DAL.Repositories
         {
             try 
             {
-                Authors authorsToUpdate = this.GetById(Convert.ToInt32(authors.au_id));
+                Authors authorsToUpdate = this.GetById(authors.au_id);
                 authorsToUpdate.au_id = authors.au_id;
                 authorsToUpdate.au_lname = authors.au_lname;
                 authorsToUpdate.au_fname = authors.au_fname;
@@ -95,7 +95,7 @@ namespace libreriaApp.DAL.Repositories
                 authorsToUpdate.city = authors.city;
                 authorsToUpdate.state = authors.state;
                 authorsToUpdate.zip = authors.zip;
-                authorsToUpdate.contact = authors.contact;
+                authorsToUpdate.contract = authors.contract;
                 authorsToUpdate.ModifyDate = DateTime.Now;
                 authorsToUpdate.UserMod = authors.UserMod;
                 
@@ -106,7 +106,7 @@ namespace libreriaApp.DAL.Repositories
             }
             catch (Exception ex)
             {
-                this.ilogger.LogError($"Error removiendo el autor{ex.Message}", ex.ToString());
+                this.ilogger.LogError($"Error al editar el autor{ex.Message}", ex.ToString());
 
             }
         }

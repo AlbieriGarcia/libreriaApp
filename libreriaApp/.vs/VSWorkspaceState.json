@@ -4,11 +4,13 @@
     "\\libreriaApp.BLL",
     "\\libreriaApp.DAL",
     "\\libreriaApp.DAL\\bin",
+    "\\libreriaApp.DAL\\Entities",
+    "\\libreriaApp.DAL\\Repositories",
     "\\libreriaApp.Web",
     "\\libreriaApp.Web\\Controllers",
     "\\libreriaApp.Web\\Views",
     "\\libreriaApp.Web\\Views\\Shared"
   ],
-  "SelectedNode": "\\libreriaApp.sln",
+  "SelectedNode": "\\libreriaApp.DAL\\Repositories\\AuthorsRepository.cs",
   "PreviewInSolutionExplorer": false
 }
