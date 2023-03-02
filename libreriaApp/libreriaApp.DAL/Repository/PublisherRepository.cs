@@ -11,26 +11,26 @@ namespace libreriaApp.DAL.Repository
 {
     public class PublisherRepository : IPublisherRepository
     {
-        private readonly LibreriaContext libreriaContext;
+        private readonly LibreriaContext context;
         private readonly ILogger<PublisherRepository> logger;
-        public PublisherRepository(LibreriaContext libreriaContext, ILogger<PublisherRepository> logger)
+        public PublisherRepository(LibreriaContext context, ILogger<PublisherRepository> logger)
         {
-            this.libreriaContext = libreriaContext;
+            this.context = context;
             this.logger = logger;
         }
         public bool Exists(string name)
         {
-            return this.libreriaContext.publishers.Any(st => st.pub_name == name);
+            return this.context.publishers.Any(st => st.pub_name == name);
         }
 
         public List<Publisher> GetAll()
         {
-            return this.libreriaContext.publishers.ToList();
+            return this.context.publishers.ToList();
         }
 
         public Publisher GetById(string publisher)
         {
-            return this.libreriaContext.publishers.Find(publisher);
+            return this.context.publishers.Find(publisher);
         }
 
         public void Remove(Publisher publisher)
@@ -42,10 +42,9 @@ namespace libreriaApp.DAL.Repository
                 publisherToRemove.Deleted = 1;
                 publisherToRemove.DeletedDate = DateTime.Now;
                 publisherToRemove.UserDeleted = 1;
-
-
-                this.libreriaContext.publishers.Update(publisherToRemove);
-                this.libreriaContext.SaveChanges();
+                
+                this.context.publishers.Remove(publisherToRemove);
+                this.context.SaveChanges();
 
             }
             catch (Exception ex) 
@@ -68,13 +67,13 @@ namespace libreriaApp.DAL.Repository
                     city= publisher.city,
                 };
 
-                this.libreriaContext.publishers.Add(publisherToAdd);
-                this.libreriaContext.SaveChanges();
+                this.context.publishers.Add(publisherToAdd);
+                this.context.SaveChanges();
             }
             catch (Exception ex)
 
             {
-                this.logger.LogError($"Error agrefar la editora", ex.ToString());
+                this.logger.LogError($"Error agregar la editora", ex.ToString());
 
             }
         }
@@ -90,9 +89,11 @@ namespace libreriaApp.DAL.Repository
                 publisherToUpdate.country = publisher.country;
                 publisherToUpdate.ModifyDate = DateTime.Now;
                 publisherToUpdate.UserMod = publisher.UserMod;
+                publisherToUpdate.city = publisher.city;
+                publisherToUpdate.state = publisher.state;
 
-                this.libreriaContext.publishers.Update(publisherToUpdate);
-                this.libreriaContext.SaveChanges();
+                this.context.publishers.Update(publisherToUpdate);
+                this.context.SaveChanges();
             }
             catch (Exception ex) 
             {
