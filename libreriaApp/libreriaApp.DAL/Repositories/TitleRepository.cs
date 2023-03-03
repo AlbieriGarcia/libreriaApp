@@ -67,7 +67,7 @@ namespace libreriaApp.DAL.Repositories
                     royalty = title.royalty,
                     ytd_sales = title.ytd_sales,
                     notes = title.notes,
-                    pubdate = DateTime.Now,
+                    pubdate = title.pubdate,
                     CreationDate = DateTime.Now,
                     CreationUser= title.CreationUser,
 
@@ -97,9 +97,11 @@ namespace libreriaApp.DAL.Repositories
                 titleToUpdate.royalty = title.royalty;
                 titleToUpdate.ytd_sales = title.ytd_sales;
                 titleToUpdate.notes = title.notes;
-                titleToUpdate.pubdate = DateTime.Now;
+                titleToUpdate.pubdate = title.pubdate;
                 titleToUpdate.ModifyDate = DateTime.Now;
                 titleToUpdate.UserMod = title.UserMod;
+
+                this.libreriaContext.titles.Update(titleToUpdate);
                 this.libreriaContext.SaveChanges();
 
             }
