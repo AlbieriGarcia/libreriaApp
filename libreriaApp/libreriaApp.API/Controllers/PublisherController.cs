@@ -18,14 +18,14 @@ namespace libreriaApp.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var publishers = this.publisherRepository.GetAll();
+            var publishers = this.publisherRepository.GetEntities();
             return Ok(publishers);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var publisher = this.publisherRepository.GetById(id);
+            var publisher = this.publisherRepository.GetEntity(id);
             return Ok(publisher);
         }
 
@@ -44,6 +44,7 @@ namespace libreriaApp.API.Controllers
             };
 
             this.publisherRepository.Save(publisher);
+            this.publisherRepository.SaveChanges();
             return Ok();
         }
 
@@ -51,6 +52,7 @@ namespace libreriaApp.API.Controllers
         public IActionResult Put([FromBody] Publisher publisher)
         {
             this.publisherRepository.Update(publisher);
+            this.publisherRepository.SaveChanges();
             return Ok();
         }
 
@@ -58,6 +60,7 @@ namespace libreriaApp.API.Controllers
         public IActionResult Remove([FromBody] Publisher publisher)
         {
             this.publisherRepository.Remove(publisher);
+            this.publisherRepository.SaveChanges();
             return Ok();
         }
     }
