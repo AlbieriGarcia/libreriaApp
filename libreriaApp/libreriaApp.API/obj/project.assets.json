@@ -1782,6 +1782,19 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
+      "libreriaApp.BLL/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "libreriaApp.DAL": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/libreriaApp.BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/libreriaApp.BLL.dll": {}
+        }
+      },
       "libreriaApp.DAL/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -6079,6 +6092,11 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
+    "libreriaApp.BLL/1.0.0": {
+      "type": "project",
+      "path": "../libreriaApp.BLL/libreriaApp.BLL.csproj",
+      "msbuildProject": "../libreriaApp.BLL/libreriaApp.BLL.csproj"
+    },
     "libreriaApp.DAL/1.0.0": {
       "type": "project",
       "path": "../libreriaApp.DAL/libreriaApp.DAL.csproj",
@@ -6088,6 +6106,7 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "Swashbuckle.AspNetCore >= 5.6.3",
+      "libreriaApp.BLL >= 1.0.0",
       "libreriaApp.DAL >= 1.0.0"
     ]
   },
@@ -6124,6 +6143,9 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+            "C:\\projects\\libreriaApp\\libreriaApp.BLL\\libreriaApp.BLL.csproj": {
+              "projectPath": "C:\\projects\\libreriaApp\\libreriaApp.BLL\\libreriaApp.BLL.csproj"
+            },
             "C:\\projects\\libreriaApp\\libreriaApp.DAL\\libreriaApp.DAL.csproj": {
               "projectPath": "C:\\projects\\libreriaApp\\libreriaApp.DAL\\libreriaApp.DAL.csproj"
             }

@@ -12,8 +12,9 @@ namespace libreriaApp.DAL.Core
         void Update(TEntity[] entities);
         void Remove(TEntity entity);
         void Remove(TEntity[] entities);
-        TEntity GetEntity(int id);
+        TEntity GetEntity(string id);
         List<TEntity> GetEntities();
         bool Exists(Expression<Func<TEntity, bool>> filter);
+        void SaveChanges();
     }
 }

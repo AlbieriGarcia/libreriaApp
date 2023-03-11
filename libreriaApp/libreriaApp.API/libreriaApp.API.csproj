@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\libreriaApp.BLL\libreriaApp.BLL.csproj" />
     <ProjectReference Include="..\libreriaApp.DAL\libreriaApp.DAL.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using libreriaApp.API.Requests;
+using libreriaApp.BLL.Contracts;
 using libreriaApp.DAL.Entities;
 using libreriaApp.DAL.Interfaces;
 using libreriaApp.DAL.Repositories;
@@ -15,27 +16,31 @@ namespace libreriaApp.API.Controllers
     public class TitleController : ControllerBase
     {
 
-        private readonly ITitleRepository titleRepository;
+        private readonly ITitleService titleService;
 
-        public TitleController(ITitleRepository TitleRepository)
+        public TitleController(ITitleService titleService)
         {
-            this.titleRepository = TitleRepository;
+            this.titleService = titleService;
+
         }
         // GET: api/<TitleController>
         [HttpGet]
         public IActionResult Get()
         {
-            var titles = this.titleRepository.GetAll();
-            return Ok(titles);
+            var result = this.titleService.GetAll();
+            if (!result.Success)
+                return BadRequest(result);
+            
+            return Ok(result);
         }
 
         // GET api/<TitleController>/5
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var title = this.titleRepository.GetById(id);
+            var result = this.titleService.GetById(id);
 
-            return Ok(title);
+            return Ok(result);
         }
 
         // POST api/<TitleController>
@@ -44,7 +49,7 @@ namespace libreriaApp.API.Controllers
         {
             Title title = new Title
             {
-                title_id = titleAdd.title_id, // Revisar El Id no se debe poner manual //
+                title_id = titleAdd.title_id, 
                 title = titleAdd.title,
                 type = titleAdd.type,
                 price = titleAdd.price,
@@ -56,7 +61,7 @@ namespace libreriaApp.API.Controllers
                 CreationDate = titleAdd.CreateDate,
                 CreationUser = titleAdd.CreationUser,
             };
-            this.titleRepository.Save(title);
+            //this.titleRepository.Save(title);
             return Ok();
         }
 
@@ -64,7 +69,7 @@ namespace libreriaApp.API.Controllers
         [HttpPost("UpdateTitle")]
         public IActionResult Put([FromBody] Title title)
         {
-            this.titleRepository.Update(title);
+            //this.titleService.Update(title);
             return Ok();
         }
 
@@ -72,7 +77,7 @@ namespace libreriaApp.API.Controllers
         [HttpPost("RemoveTitle")]
         public IActionResult Remove([FromBody] Title title)
         {
-            this.titleRepository.Remove(title);
+            //this.titleService.Remove(title);
             return Ok();
         }
     }

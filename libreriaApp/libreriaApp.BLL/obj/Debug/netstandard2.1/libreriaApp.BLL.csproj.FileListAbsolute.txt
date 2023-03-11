@@ -8,3 +8,6 @@ C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL
 C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.csproj.CoreCompileInputs.cache
 C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.dll
 C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.pdb
+C:\projects\libreriaApp\libreriaApp.BLL\bin\Debug\netstandard2.1\libreriaApp.DAL.dll
+C:\projects\libreriaApp\libreriaApp.BLL\bin\Debug\netstandard2.1\libreriaApp.DAL.pdb
+C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.csproj.CopyComplete
