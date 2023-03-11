@@ -2,6 +2,8 @@
 using libreriaApp.DAL.Context;
 using Microsoft.Extensions.Logging;
 using libreriaApp.DAL.Interfaces;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace libreriaApp.DAL.Repository
 {

@@ -6,7 +6,8 @@ namespace libreriaApp.BLL.Core
 {
     public interface IBaseService
     {
-        IBaseService BaseService { get; }
+        ServiceResult GetAll();
+        ServiceResult GetById(string id);
 
     }
 }

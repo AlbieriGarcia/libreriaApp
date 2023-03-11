@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using libreriaApp.DAL.Entities;
 using libreriaApp.API.Requests;
-
+using libreriaApp.BLL.Contract;
 
 namespace libreriaApp.API.Controllers
 {
@@ -10,23 +10,31 @@ namespace libreriaApp.API.Controllers
     [ApiController]
     public class PublisherController : ControllerBase
     {
-        private readonly IPublisherRepository publisherRepository;
-        public PublisherController(IPublisherRepository PublisherRepository) 
-        {
-            this.publisherRepository = PublisherRepository;
+        private readonly IPublisherService publisherService;
+
+        public PublisherController(IPublisherService publisherService) 
+        {        
+            this.publisherService = publisherService;
         }
+
         [HttpGet]
         public IActionResult Get()
         {
-            var publishers = this.publisherRepository.GetEntities();
-            return Ok(publishers);
+            var result = this.publisherService.GetAll();
+
+            if (!result.Success)
+                return BadRequest(result);
+            
+
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var publisher = this.publisherRepository.GetEntity(id);
-            return Ok(publisher);
+            var result = this.publisherService.GetById(id);
+            return Ok(result);
         }
 
         [HttpPost("Save")]
@@ -43,24 +51,24 @@ namespace libreriaApp.API.Controllers
 
             };
 
-            this.publisherRepository.Save(publisher);
-            this.publisherRepository.SaveChanges();
+  //          this.publisherRepository.Save(publisher);
+  //          this.publisherRepository.SaveChanges();
             return Ok();
         }
 
         [HttpPut("Update")]
         public IActionResult Put([FromBody] Publisher publisher)
         {
-            this.publisherRepository.Update(publisher);
-            this.publisherRepository.SaveChanges();
+   //         this.publisherRepository.Update(publisher);
+   //         this.publisherRepository.SaveChanges();
             return Ok();
         }
 
         [HttpDelete("Remove")]
         public IActionResult Remove([FromBody] Publisher publisher)
         {
-            this.publisherRepository.Remove(publisher);
-            this.publisherRepository.SaveChanges();
+  //          this.publisherRepository.Remove(publisher);
+ //           this.publisherRepository.SaveChanges();
             return Ok();
         }
     }

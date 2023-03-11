@@ -181,3 +181,5 @@ C:\proyecs\libreriaApp\libreriaApp\libreriaApp.API\obj\Debug\net5.0\libreriaApp.
 C:\proyecs\libreriaApp\libreriaApp\libreriaApp.API\obj\Debug\net5.0\libreriaApp.API.csproj.CopyComplete
 C:\proyecs\libreriaApp\libreriaApp\libreriaApp.API\obj\Debug\net5.0\libreriaApp.API.genruntimeconfig.cache
 C:\proyecs\libreriaApp\libreriaApp\libreriaApp.API\obj\Debug\net5.0\ref\libreriaApp.API.dll
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.API\bin\Debug\net5.0\libreriaApp.BLL.dll
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.API\bin\Debug\net5.0\libreriaApp.BLL.pdb

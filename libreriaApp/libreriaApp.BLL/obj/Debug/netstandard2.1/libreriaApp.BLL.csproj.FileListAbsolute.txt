@@ -8,3 +8,16 @@ C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL
 C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.csproj.CoreCompileInputs.cache
 C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.dll
 C:\projects\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.pdb
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\bin\Debug\netstandard2.1\libreriaApp.BLL.deps.json
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\bin\Debug\netstandard2.1\libreriaApp.BLL.dll
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\bin\Debug\netstandard2.1\libreriaApp.BLL.pdb
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\bin\Debug\netstandard2.1\libreriaApp.DAL.dll
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\bin\Debug\netstandard2.1\libreriaApp.DAL.pdb
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.csproj.AssemblyReference.cache
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.AssemblyInfoInputs.cache
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.AssemblyInfo.cs
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.csproj.CoreCompileInputs.cache
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.csproj.CopyComplete
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.dll
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.BLL\obj\Debug\netstandard2.1\libreriaApp.BLL.pdb

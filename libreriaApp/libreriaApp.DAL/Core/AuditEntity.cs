@@ -16,5 +16,7 @@ namespace libreriaApp.DAL.Core
         public int? UserDeleted { get; set; }
         public DateTime? DeletedDate { get; set; }
         public int? Deleted { get; set; }
+
+        public DateTime StartDate { get; set; }
     }
 }

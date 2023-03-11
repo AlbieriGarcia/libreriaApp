@@ -1,3 +1,5 @@
+using libreriaApp.BLL.Contract;
+using libreriaApp.BLL.Services;
 using libreriaApp.DAL.Context;
 using libreriaApp.DAL.Interfaces;
 using libreriaApp.DAL.Repository;
@@ -8,12 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace libreriaApp.API
 {
@@ -32,12 +30,20 @@ namespace libreriaApp.API
             // Context //
             services.AddDbContext<LibreriaContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("LibreriaContext")));
 
+            //Dependencias //
+
+            //Repositories
             services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "libreriaApp.API", Version = "v1" });
             });
+
+            //APP Services // 
+
+            services.AddTransient<IPublisherService, PublisherService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
