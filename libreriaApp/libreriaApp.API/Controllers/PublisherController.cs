@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using libreriaApp.DAL.Entities;
 using libreriaApp.API.Requests;
 using libreriaApp.BLL.Contract;
+using libreriaApp.BLL.Dtos.Publisher;
 
 namespace libreriaApp.API.Controllers
 {
@@ -41,35 +42,34 @@ namespace libreriaApp.API.Controllers
         public IActionResult Post([FromBody] PublisherAddRequest publisherAdd)
         {
 
-            Publisher publisher = new Publisher
+            PublisherAddDto publisher = new PublisherAddDto()
             {
+                CreationDate = publisherAdd.CreationDate,
+                CreationUser = publisherAdd.CreationUser,
                 pub_id = publisherAdd.pub_id,
                 pub_name = publisherAdd.pub_name,
+                country = publisherAdd.country,
                 city = publisherAdd.city,
                 state = publisherAdd.state,
-                country = publisherAdd.country,
-
+                StartDate = publisherAdd.StartDate
             };
 
-  //          this.publisherRepository.Save(publisher);
-  //          this.publisherRepository.SaveChanges();
-            return Ok();
+            var result = this.publisherService.SavePublisher(publisher);
+            return Ok(result);
         }
 
         [HttpPut("Update")]
-        public IActionResult Put([FromBody] Publisher publisher)
+        public IActionResult Put([FromBody] PublisherUpdateDto publisher)
         {
-   //         this.publisherRepository.Update(publisher);
-   //         this.publisherRepository.SaveChanges();
-            return Ok();
+           var result = this.publisherService.UpdatePublisher(publisher);
+            return Ok(result);
         }
 
         [HttpDelete("Remove")]
-        public IActionResult Remove([FromBody] Publisher publisher)
+        public IActionResult Remove([FromBody] PublisherRemoveDto publisher)
         {
-  //          this.publisherRepository.Remove(publisher);
- //           this.publisherRepository.SaveChanges();
-            return Ok();
+           var result = this.publisherService.RemoverPublisher(publisher);  
+            return Ok(result);
         }
     }
 }
