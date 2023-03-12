@@ -1,3 +1,4 @@
+using libreriaApp.API.Depndencies;
 using libreriaApp.BLL.Contract;
 using libreriaApp.BLL.Services;
 using libreriaApp.DAL.Context;
@@ -31,9 +32,9 @@ namespace libreriaApp.API
             services.AddDbContext<LibreriaContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("LibreriaContext")));
 
             //Dependencias //
+            services.AddPublisherDependency();
 
             //Repositories
-            services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -41,8 +42,7 @@ namespace libreriaApp.API
             });
 
             //APP Services // 
-
-            services.AddTransient<IPublisherService, PublisherService>();
+            //services.AddTransient<IPublisherService, PublisherService>();
 
         }
 

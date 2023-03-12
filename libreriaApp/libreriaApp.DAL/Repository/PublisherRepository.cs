@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using libreriaApp.DAL.Interfaces;
 using System.Linq;
 using System.Collections.Generic;
+using libreriaApp.DAL.Exceptions;
 
 namespace libreriaApp.DAL.Repository
 {
@@ -18,6 +19,38 @@ namespace libreriaApp.DAL.Repository
             this.logger = logger;
         }
 
+        public override void Save(Publisher entity)
+        {
+            if (this.Exists(cd => cd.pub_name == entity.pub_name))
+            {
+                throw new PublisherDataException("Esta auditora ya existe");
+            }
+            base.Save(entity);
+            base.SaveChanges();
+        }
+
+        public override void Update(Publisher entity)
+        {
+            base.Update(entity);
+            base.SaveChanges();
+        }
+        public override void Remove(Publisher entity)
+        {
+            base.Remove(entity);
+            base.SaveChanges();
+        }
+
+        public override List<Publisher> GetEntities()
+        {
+            return this.context.publishers.Where(cd => !cd.Deleted).ToList(); 
+
+
+        }
+
+        public override Publisher GetEntity(string id)
+        {
+            return this.context.publishers.FirstOrDefault(cd => cd.pub_id== id && !cd.Deleted);
+        }
 
     }
 }

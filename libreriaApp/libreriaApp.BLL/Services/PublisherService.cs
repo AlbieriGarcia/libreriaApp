@@ -1,8 +1,10 @@
 ﻿using libreriaApp.BLL.Contract;
 using libreriaApp.BLL.Core;
 using libreriaApp.BLL.Dtos.Publisher;
+using libreriaApp.BLL.Extentions;
 using libreriaApp.BLL.Models;
 using libreriaApp.DAL.Entities;
+using libreriaApp.DAL.Exceptions;
 using libreriaApp.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -97,34 +99,69 @@ namespace libreriaApp.BLL.Services
             }
             return result;
         }
+
+
+
         public ServiceResult SavePublisher(PublisherAddDto publisherAdd)
         {
             ServiceResult result = new ServiceResult();
-            try 
+
+
+            if (string.IsNullOrEmpty(publisherAdd.pub_id))
             {
-                Publisher publisher = new Publisher()
-                {
-                    
-                    CreationDate = publisherAdd.CreationDate,
-                    CreationUser = publisherAdd.CreationUser,
-                    pub_id = publisherAdd.pub_id,
-                    pub_name = publisherAdd.pub_name,
-                    country = publisherAdd.country,
-                    city = publisherAdd.city,
-                    state = publisherAdd.state,                                     
-                    StartDate= publisherAdd.StartDate
-
-                };
-                this.PublisherRepository.Save(publisher);
-                this.PublisherRepository.SaveChanges();
-                result.Message = "La auditora se agrego correctamente";
-
+                result.Success = false;
+                result.Message = "El id es requerido";
+                return result;
             }
-            catch (DbUpdateException ex)
+            if (string.IsNullOrEmpty(publisherAdd.pub_name))
             {
-                result.Message = "Error agregando la editora";
+                result.Success = false;
+                result.Message = "El pub_name es requerido";
+            }
+            if (publisherAdd.pub_name.Length > 40)
+            {
+                result.Success = false;
+                result.Message = "La longitud del nombre es invalida(max40)";
+                return result;
+            }
+            if (string.IsNullOrEmpty(publisherAdd.city))
+            {
+                result.Success = false;
+                result.Message = "La ciudad es requerida";
+                return result;
+            }
+            if (publisherAdd.city.Length > 20)
+            {
+                result.Success = false;
+                result.Message = "La longitud de la ciudad es invalidad(max20)";
+                return result;
+            }
+            if (publisherAdd.state?.Length > 2)
+            {
+                result.Success = false;
+                result.Message = "La longitud de state es invalidad(max2)";
+                return result;
+            }
+            try
+            {
+                Publisher publisher = publisherAdd.GetPublisherEntityFromDtoSave();
+                this.PublisherRepository.Save(publisher);
+                result.Success = true;
+                result.Message = "La Editorial a sido agregada correctamente";
+            }
+            catch (PublisherDataException sdex)
+            {
+                result.Message = sdex.Message;
+                result.Success = false;
+                this.logger.LogError($"{result.Message}", sdex.ToString());
+            }
+            catch (Exception ex) 
+            {
+                result.Message = "A sucedido un error agregando la Editorial";
                 result.Success = false;
                 this.logger.LogError($"{result.Message}", ex.ToString());
+
+
             }
             return result;
         }
@@ -133,27 +170,68 @@ namespace libreriaApp.BLL.Services
             ServiceResult result = new ServiceResult();
             try
             {
-                Publisher publisher = this.PublisherRepository.GetEntity(publisherUpdate.pub_id);
 
-                publisher.pub_id = publisherUpdate.pub_id;
-                publisher.pub_name = publisherUpdate.pub_name;
-                publisher.city = publisherUpdate.city;
-                publisher.state = publisherUpdate.state;
-                publisher.country = publisherUpdate.country;
+                if (string.IsNullOrEmpty(publisherUpdate.pub_id))
+                {
+                    result.Success = false;
+                    result.Message = "El id es requerido";
+                    return result;
+                }
+                if (string.IsNullOrEmpty(publisherUpdate.pub_name))
+                {
+                    result.Success = false;
+                    result.Message = "El pub_name es requerido";
+                }
+                if (publisherUpdate.pub_name.Length > 40)
+                {
+                    result.Success = false;
+                    result.Message = "La longitud del nombre es invalida(max40)";
+                    return result;
+                }
+                if (string.IsNullOrEmpty(publisherUpdate.city))
+                {
+                    result.Success = false;
+                    result.Message = "La ciudad es requerida";
+                    return result;
+                }
+                if (publisherUpdate.city.Length > 20)
+                {
+                    result.Success = false;
+                    result.Message = "La longitud de la ciudad es invalidad(max20)";
+                    return result;
+                }
+                if (publisherUpdate.state?.Length > 2)
+                {
+                    result.Success = false;
+                    result.Message = "La longitud de state es invalidad(max2)";
+                    return result;
+                }
+
+                Publisher publisher = this.PublisherRepository.GetEntity(publisherUpdate.pub_id);
                 publisher.ModifyDate = publisherUpdate.ModifyDate;
                 publisher.UserMod = publisherUpdate.UserMod;
-                publisher.StartDate = publisherUpdate.StartDate;
+                publisher.pub_id= publisherUpdate.pub_id;
+                publisher.pub_name = publisherUpdate.pub_name;
+                publisher.city = publisherUpdate.city;
+                publisher.country = publisherUpdate.country;
+                publisher.state = publisherUpdate.state;
 
-                
                 this.PublisherRepository.Update(publisher);
-                this.PublisherRepository.SaveChanges();
-                result.Message = "La auditora se modifico correctamente";
+                result.Success = true;
+                result.Message = "La Editorial fue editada satisfactoriamente";
             }
-            catch (Exception ex)
+            catch (PublisherDataException sdex)
             {
-                result.Message = "Error editando a la editora";
+                result.Message = sdex.Message;
                 result.Success = false;
-                this.logger.LogError($"{result.Message}", ex.ToString());
+                this.logger.LogError($"{result.Message}", sdex.ToString());
+            }
+            catch (Exception ex) 
+            {
+                result.Message = "Ocurrio un error editando el registro";
+                result.Success = false;
+                this.logger.LogError(result.Message, ex.ToString());
+            
             }
             return result;
         }

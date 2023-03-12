@@ -23,53 +23,56 @@ namespace libreriaApp.API.Controllers
         {
             var result = this.publisherService.GetAll();
 
-            if (!result.Success)
+            if (result.Success)
+                return Ok(result);
+            else
                 return BadRequest(result);
-            
-
-
-            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
             var result = this.publisherService.GetById(id);
-            return Ok(result);
+
+            if (result.Success)
+
+                 return Ok(result);
+
+            else
+
+                return BadRequest(result);
         }
 
         [HttpPost("Save")]
-        public IActionResult Post([FromBody] PublisherAddRequest publisherAdd)
+        public IActionResult Post([FromBody] PublisherAddDto publisherAdd)
         {
+            var result = this.publisherService.SavePublisher(publisherAdd);
 
-            PublisherAddDto publisher = new PublisherAddDto()
-            {
-                CreationDate = publisherAdd.CreationDate,
-                CreationUser = publisherAdd.CreationUser,
-                pub_id = publisherAdd.pub_id,
-                pub_name = publisherAdd.pub_name,
-                country = publisherAdd.country,
-                city = publisherAdd.city,
-                state = publisherAdd.state,
-                StartDate = publisherAdd.StartDate
-            };
-
-            var result = this.publisherService.SavePublisher(publisher);
-            return Ok(result);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
 
         [HttpPut("Update")]
-        public IActionResult Put([FromBody] PublisherUpdateDto publisher)
+        public IActionResult Put([FromBody] PublisherUpdateDto publisherUpdate)
         {
-           var result = this.publisherService.UpdatePublisher(publisher);
-            return Ok(result);
+           var result = this.publisherService.UpdatePublisher(publisherUpdate);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
 
         [HttpDelete("Remove")]
-        public IActionResult Remove([FromBody] PublisherRemoveDto publisher)
+        public IActionResult Remove([FromBody] PublisherRemoveDto publisherRemove)
         {
-           var result = this.publisherService.RemoverPublisher(publisher);  
-            return Ok(result);
+           var result = this.publisherService.RemoverPublisher(publisherRemove);  
+
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
     }
 }
