@@ -1,5 +1,6 @@
 ﻿using libreriaApp.API.Requests;
 using libreriaApp.BLL.Contracts;
+using libreriaApp.BLL.Dtos.Title;
 using libreriaApp.DAL.Entities;
 using libreriaApp.DAL.Interfaces;
 using libreriaApp.DAL.Repositories;
@@ -47,7 +48,7 @@ namespace libreriaApp.API.Controllers
         [HttpPost("SaveTitle")]
         public IActionResult Post([FromBody] TitleAddRequest titleAdd)
         {
-            Title title = new Title
+            TitleAddDto title = new TitleAddDto()
             {
                 title_id = titleAdd.title_id, 
                 title = titleAdd.title,
@@ -61,24 +62,24 @@ namespace libreriaApp.API.Controllers
                 CreationDate = titleAdd.CreateDate,
                 CreationUser = titleAdd.CreationUser,
             };
-            //this.titleRepository.Save(title);
-            return Ok();
+            var resuls = this.titleService.SaveTitle(title);
+            return Ok(resuls);
         }
 
         // POST api/<TitleController>
         [HttpPost("UpdateTitle")]
-        public IActionResult Put([FromBody] Title title)
+        public IActionResult Put([FromBody] TitleUpdateDto title)
         {
-            //this.titleService.Update(title);
-            return Ok();
+            var result = this.titleService.UpdateTitle(title);
+            return Ok(result);
         }
 
 
         [HttpPost("RemoveTitle")]
-        public IActionResult Remove([FromBody] Title title)
+        public IActionResult Remove([FromBody] TitleRemoveDto title)
         {
-            //this.titleService.Remove(title);
-            return Ok();
+            var resuls = this.titleService.RemoveTitle(title);
+            return Ok(resuls);
         }
     }
 }

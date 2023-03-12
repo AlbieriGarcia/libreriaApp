@@ -24,6 +24,7 @@ namespace libreriaApp.DAL.Repositories
         {
             return this.libreriaContext.titles.Where(de => !de.Deleted).OrderByDescending(cd => cd.CreationDate).ToList();
         }
+        
 
     }
 }
