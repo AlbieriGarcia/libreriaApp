@@ -1,4 +1,6 @@
-﻿namespace libreriaApp.API.Requests
+﻿using System;
+
+namespace libreriaApp.API.Requests
 {
     public class AuthorsAddRequest : RequestAddBase
     {
@@ -11,5 +13,7 @@
         public string? state { get; set; }
         public string? zip { get; set; }
         public bool contract { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

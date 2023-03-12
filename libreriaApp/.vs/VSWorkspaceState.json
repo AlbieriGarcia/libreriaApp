@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\libreriaApp.BLL",
+    "\\libreriaApp.BLL\\Services",
     "\\libreriaApp.DAL",
-    "\\libreriaApp.DAL\\bin",
     "\\libreriaApp.DAL\\Entities",
     "\\libreriaApp.DAL\\Repositories",
     "\\libreriaApp.Web",
@@ -11,6 +11,6 @@
     "\\libreriaApp.Web\\Views",
     "\\libreriaApp.Web\\Views\\Shared"
   ],
-  "SelectedNode": "\\libreriaApp.DAL\\Repositories\\AuthorsRepository.cs",
+  "SelectedNode": "\\libreriaApp.BLL\\Services\\AuthorsService.cs",
   "PreviewInSolutionExplorer": false
 }

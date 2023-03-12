@@ -4,6 +4,8 @@ using libreriaApp.DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using libreriaApp.API.Requests;
+using libreriaApp.BLL.Contract;
+using libreriaApp.BLL.Dtos.Authors;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,66 +15,68 @@ namespace libreriaApp.API.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly IAuthorsRepository authorsRepository;
-        public AuthorsController(IAuthorsRepository authorsRepository) 
+        private readonly IAuthorsService authorService;
+
+        public AuthorsController(IAuthorsService authorService) 
         {
-            this.authorsRepository = authorsRepository;
+            this.authorService = authorService;
         }
         // GET: api/<AuthorsController>
         [HttpGet]
         public IActionResult Get()
         {
-            var authors = this.authorsRepository.GetEntities();
-            return Ok(authors);
+            var result = this.authorService.GetAll();
+
+            if(!result.Success)
+            
+                return BadRequest(result);
+            
+
+            return Ok(result);
         }
 
         // GET api/<AuthorsController>/5
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var authors = this.authorsRepository.GetEntity(id);
-            return Ok(authors);
+            var result = this.authorService.GetById(id);
+            return Ok(result);
         }
 
         // POST api/<AuthorsController>
         [HttpPost("Save Authors")]
-        public IActionResult Post([FromBody] AuthorsAddRequest authorsAdd)
+       public IActionResult Post([FromBody] AuthorsAddDto authorsAddDto)
         {
-            Authors authors = new Authors()
-            {
-                au_id = authorsAdd.au_id,
-                au_lname = authorsAdd.au_lname,
-                au_fname = authorsAdd.au_fname,
-                phone = authorsAdd.phone,
-                address = authorsAdd.address,
-                city = authorsAdd.city,
-                state = authorsAdd.state,
-                zip = authorsAdd.zip,
-                contract = authorsAdd.contract,
-            };
+            var result = this.authorService.SaveAuthors(authorsAddDto);
 
-            this.authorsRepository.Save(authors);
-            this.authorsRepository.SaveChanges();
-            return Ok();
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
 
         // PUT api/<AuthorsController>/5
         [HttpPut("Update Authros")]
-        public IActionResult Put([FromBody]Authors authors)
+        public IActionResult Put([FromBody]AuthorsUpdateDto authorsUpdateDto)
         {
-            this.authorsRepository.Update(authors);
-            this.authorsRepository.SaveChanges();
-            return Ok();
+            var result = this.authorService.UpdateAuthors(authorsUpdateDto);
+
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
 
         // DELETE api/<AuthorsController>/5
         [HttpDelete("Delete Authors")]
-        public IActionResult Delete([FromBody]Authors authors)
+        public IActionResult Delete([FromBody]AuthorsRemoveDto authorsRemoveDto)
         {
-            this.authorsRepository.Remove(authors);
-            this.authorsRepository.SaveChanges();
+            var result = this.authorService.RemoveAuthors(authorsRemoveDto);
 
-            return Ok();
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
     }
 }

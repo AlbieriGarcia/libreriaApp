@@ -13,15 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libreriaApp.BLL", "libreria
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{14E6A422-620F-4655-AAE3-4DBF2DA8CB18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libreriaApp.API", "libreriaApp.API\libreriaApp.API.csproj", "{5F2C7400-CF13-4AA1-8F22-D34A27D05614}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libreriaApp.API", "libreriaApp.API\libreriaApp.API.csproj", "{5F2C7400-CF13-4AA1-8F22-D34A27D05614}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PRE", "PRE", "{0C27EFBA-FE0E-4DEF-9F0A-984DFCF0AD8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libreriaApp.Web", "libreriaApp.Web\libreriaApp.Web.csproj", "{B3FF0C38-B47E-4668-8D07-6D7563BA8F6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libreriaApp.Web", "libreriaApp.Web\libreriaApp.Web.csproj", "{B3FF0C38-B47E-4668-8D07-6D7563BA8F6B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TEST", "TEST", "{FC11AF6B-6420-4066-927B-030453CAD8C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libreriaApp.Test", "libreriaApp.Test\libreriaApp.Test.csproj", "{FBBA4EE2-6131-4EB7-8161-9900FE0CC6F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libreriaApp.Test", "libreriaApp.Test\libreriaApp.Test.csproj", "{FBBA4EE2-6131-4EB7-8161-9900FE0CC6F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
