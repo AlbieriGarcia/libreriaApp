@@ -97,61 +97,69 @@ namespace libreriaApp.BLL.Services
         public ServiceResult SaveAuthors(AuthorsAddDto authorsAdd)
         {
             ServiceResult result = new ServiceResult();
-
-            if (string.IsNullOrEmpty(authorsAdd.au_id))
+            try
             {
-                result.Success = false;
-                result.Message = "El id del autor es requerido";
-                return result;
+                if (string.IsNullOrEmpty(authorsAdd.au_id))
+                {
+                    result.Success = false;
+                    result.Message = "El id del autor es requerido";
+                    return result;
+                }
+
+                if (string.IsNullOrEmpty(authorsAdd.au_fname))
+                {
+                    result.Success = false;
+                    result.Message = "El nombre es requerido";
+                    return result;
+                }
+
+                if (authorsAdd.au_fname.Length > 40)
+                {
+                    result.Success = false;
+                    result.Message = "La longitud del nombre es inválida";
+                    return result;
+                }
+
+                if (string.IsNullOrEmpty(authorsAdd.au_lname))
+                {
+                    result.Success = false;
+                    result.Message = "El apellido es requerido";
+                    return result;
+                }
+
+                if (authorsAdd.au_lname.Length > 40)
+                {
+                    result.Success = false;
+                    result.Message = "La longitud del apellido es invalido";
+                    return result;
+                }
+
+                if (string.IsNullOrEmpty(authorsAdd.phone))
+                {
+                    result.Success = false;
+                    result.Message = "El telefono es requerido";
+                    return result;
+                }
+
+                if (authorsAdd.address.Length > 40)
+                {
+                    result.Success = false;
+                    result.Message = "La longitud de la direccion es invalida";
+                    return result;
+                }
+
+                if (authorsAdd.city.Length > 20)
+                {
+                    result.Success = false;
+                    result.Message = "La longitud de la ciudad es invalida";
+                    return result;
+                }
             }
-
-            if (string.IsNullOrEmpty(authorsAdd.au_fname))
+            catch (AuthorsDataException adex)
             {
+                result.Message = adex.Message;
                 result.Success = false;
-                result.Message = "El nombre es requerido";
-                return result;
-            }
-
-            if (authorsAdd.au_fname.Length > 40)
-            {
-                result.Success = false;
-                result.Message = "La longitud del nombre es inválida";
-                return result;
-            }
-
-            if (string.IsNullOrEmpty(authorsAdd.au_lname))
-            {
-                result.Success = false;
-                result.Message = "El apellido es requerido";
-                return result;
-            }
-
-            if (authorsAdd.au_lname.Length > 40)
-            {
-                result.Success = false;
-                result.Message = "La longitud del apellido es invalido";
-                return result;
-            }
-
-            if (string.IsNullOrEmpty(authorsAdd.phone))
-            {
-                result.Success = false;
-                result.Message = "El telefono es requerido";
-                return result;
-            }
-
-            if (authorsAdd.address.Length >40)
-            {
-                result.Success = false;
-                result.Message = "La longitud de la direccion es invalida";
-                return result;
-            }
-
-            if (authorsAdd.city.Length > 20)
-            {
-                result.Success = false;
-                result.Message = "La longitud de la ciudad es invalida";
-                return result;
+                this.logger.LogError($"{result.Message}", adex.ToString());
             }
             try
             {
@@ -161,14 +169,10 @@ namespace libreriaApp.BLL.Services
                 result.Message = "El autor fue insertado correctamente";
             }
 
-            catch (AuthorsDataException adex)
-            {
-                result.Message = adex.Message;
-                result.Success = false;
-                this.logger.LogError(result.Message, adex.ToString());
-            }
 
-            catch (Exception ex) 
+            
+
+            catch (Exception ex)
             {
                 result.Message = "Error guardando los autores";
                 result.Success = false;

@@ -44,7 +44,7 @@ namespace libreriaApp.API.Controllers
         }
 
         // POST api/<AuthorsController>
-        [HttpPost("Save Authors")]
+        [HttpPost("SaveAuthors")]
        public IActionResult Post([FromBody] AuthorsAddDto authorsAddDto)
         {
             var result = this.authorService.SaveAuthors(authorsAddDto);
@@ -56,7 +56,7 @@ namespace libreriaApp.API.Controllers
         }
 
         // PUT api/<AuthorsController>/5
-        [HttpPut("Update Authros")]
+        [HttpPut("UpdateAuthros")]
         public IActionResult Put([FromBody]AuthorsUpdateDto authorsUpdateDto)
         {
             var result = this.authorService.UpdateAuthors(authorsUpdateDto);
@@ -68,7 +68,7 @@ namespace libreriaApp.API.Controllers
         }
 
         // DELETE api/<AuthorsController>/5
-        [HttpDelete("Delete Authors")]
+        [HttpDelete("DeleteAuthors")]
         public IActionResult Delete([FromBody]AuthorsRemoveDto authorsRemoveDto)
         {
             var result = this.authorService.RemoveAuthors(authorsRemoveDto);

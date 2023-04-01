@@ -1,44 +1,79 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using libreriaApp.Web.Models.Request;
+using libreriaApp.Web.Models.Response;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace libreriaApp.Web.Controllers
 {
     public class AuthorsController : Controller
     {
-        // GET: AuthorsController
-        public ActionResult Index()
+
+        HttpClientHandler httpClientHandler = new HttpClientHandler();
+        private readonly ILogger<AuthorsController> logger;
+        private readonly IConfiguration configuration;
+
+        public AuthorsController(ILogger<AuthorsController> logger,
+            IConfiguration configuration)
         {
-            List<Models.AuthorsModels> authors = new List<Models.AuthorsModels>()
+            this.logger = logger;
+            this.configuration = configuration;
+        }
+        public async Task<ActionResult> Index()
+        {
+            AuthorsListResponse authorsListResponse = new AuthorsListResponse();
+
+            try
             {
-                new Models.AuthorsModels()
+                using (var httpClient = new HttpClient(this.httpClientHandler))
                 {
-                    au_id=1,au_lname="White",au_fname="Johson",phone="408-496-7223",address="10932 Bigge Rd.",city="Menlo Park",state="CA",zip="94025",contact=1
-                },
-                new Models.AuthorsModels()
-                {
-                    au_id=2,au_lname="Green",au_fname="Marjorie",phone="415-986-7020",address="309 63rd ST. #411",city="Oakland",state="CA",zip="94618",contact=1
-                },
-                new Models.AuthorsModels()
-                {
-                    au_id=3,au_lname="Carson",au_fname="Cheryl",phone="415-548-7723",address="589 Darwin Ln.",city="Berkely",state="CA",zip="94705",contact=1
-                },
-                new Models.AuthorsModels()
-                {
-                    au_id=4,au_lname="O'Leary",au_fname="Michael",phone="408-286-2428",address="22 Cleveland Av #14",city="San Jose",state="CA",zip="95128",contact=1
+                    var response = await httpClient.GetAsync($"http://localhost:19474/api/Authors");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        authorsListResponse = JsonConvert.DeserializeObject<AuthorsListResponse>(apiResponse);
+                    }
+                    else
+                    {
+                        // realizar x logica
+                    }
                 }
-                ,new Models.AuthorsModels()
-                {
-                    au_id=5,au_lname="Straight",au_fname="Dean",phone="415-834-2919",address="5420 College Av.",city="Oakland",state="CA",zip="94609",contact=1
-                }
-            };
-            return View(authors);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError("Error obteniendo los autores", ex.ToString());
+            }
+
+            return View(authorsListResponse.data);
         }
 
         // GET: AuthorsController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            AuthorsResponse authorsReponse = new AuthorsResponse();
+            using (var httpClient = new HttpClient(this.httpClientHandler))
+            {
+                var response = await httpClient.GetAsync($"http://localhost:19474/api/Authors/" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    authorsReponse = JsonConvert.DeserializeObject<AuthorsResponse>(apiResponse);
+                }
+                else
+                {
+                    // realizar x logica
+                }
+            }
+            return View(authorsReponse.data);
         }
 
         // GET: AuthorsController/Create
@@ -50,11 +85,34 @@ namespace libreriaApp.Web.Controllers
         // POST: AuthorsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(AuthorsCreateRequest authorsCreateRequest)
         {
+            BaseResponse baseResponse = new BaseResponse();
             try
             {
-                return RedirectToAction(nameof(Index));
+                authorsCreateRequest.CreationDate = DateTime.Now;
+                authorsCreateRequest.CreationUser = 1;
+                using (var httpClient = new HttpClient(this.httpClientHandler))
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(authorsCreateRequest), Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync("http://localhost:19474/api/Authors/SaveAuthors", content);
+
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewBag.Message = baseResponse.Message;
+                        return View();
+                    }
+                }
+            
             }
             catch
             {
@@ -63,19 +121,58 @@ namespace libreriaApp.Web.Controllers
         }
 
         // GET: AuthorsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            AuthorsResponse authorsReponse = new AuthorsResponse();
+
+            using (var httpClient = new HttpClient(this.httpClientHandler))
+            {
+                var response = await httpClient.GetAsync($"http://localhost:19474/api/Authors/" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    authorsReponse = JsonConvert.DeserializeObject<AuthorsResponse>(apiResponse);
+                }
+                else
+                {
+                    // realizar x logica
+                }
+            }
+            return View(authorsReponse.data);
         }
 
         // POST: AuthorsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult>Edit(AuthorsUpdateRequest authorsUpdateRequest)
         {
+            BaseResponse baseResponse = new BaseResponse();
             try
             {
-                return RedirectToAction(nameof(Index));
+                authorsUpdateRequest.ModifyDate = DateTime.Now;
+                authorsUpdateRequest.UserMod = 1;
+                using (var httpClient = new HttpClient(this.httpClientHandler))
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(authorsUpdateRequest), Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PutAsync("http://localhost:19474/api/Authors/UpdateAuthros", content);
+                    
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewBag.Message = baseResponse.Message;
+                        return View();
+                    }
+                }
+               
             }
             catch
             {
@@ -83,25 +180,5 @@ namespace libreriaApp.Web.Controllers
             }
         }
 
-        // GET: AuthorsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AuthorsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

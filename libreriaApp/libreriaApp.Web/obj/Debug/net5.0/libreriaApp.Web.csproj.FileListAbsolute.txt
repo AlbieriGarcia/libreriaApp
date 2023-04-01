@@ -163,3 +163,6 @@ C:\projecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\libreriaApp.
 C:\projecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\libreriaApp.Web.genruntimeconfig.cache
 C:\projecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\ref\libreriaApp.Web.dll
 C:\projecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\Razor\Views\Authors\Index.cshtml.g.cs
+C:\projecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\Razor\Views\Authors\Details.cshtml.g.cs
+C:\projecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\Razor\Views\Authors\Create.cshtml.g.cs
+C:\projecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\Razor\Views\Authors\Edit.cshtml.g.cs

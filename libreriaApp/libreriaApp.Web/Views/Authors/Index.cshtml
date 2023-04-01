@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Autores</h1>
+<h1>Listado De Los Autores</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -37,7 +37,7 @@
                 @Html.DisplayNameFor(model => model.zip)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.contact)
+                @Html.DisplayNameFor(model => model.contract)
             </th>
             <th></th>
         </tr>
@@ -70,12 +70,11 @@
                 @Html.DisplayFor(modelItem => item.zip)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.contact)
+                @Html.DisplayFor(modelItem => item.contract)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { id=item.au_id }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.au_id  }) |
             </td>
         </tr>
 }
