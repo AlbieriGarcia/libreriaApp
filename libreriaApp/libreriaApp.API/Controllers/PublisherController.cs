@@ -1,7 +1,4 @@
-﻿using libreriaApp.DAL.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using libreriaApp.DAL.Entities;
-using libreriaApp.API.Requests;
+﻿using Microsoft.AspNetCore.Mvc;
 using libreriaApp.BLL.Contract;
 using libreriaApp.BLL.Dtos.Publisher;
 

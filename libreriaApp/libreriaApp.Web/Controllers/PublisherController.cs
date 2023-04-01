@@ -1,68 +1,125 @@
 ﻿using libreriaApp.Web.Models;
+using libreriaApp.Web.Models.Request;
+using libreriaApp.Web.Models.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace libreriaApp.Web.Controllers
 {
     public class PublisherController : Controller
     {
-        // GET: PublisherController
-        public ActionResult Index()
+        HttpClientHandler httpClientHandler = new HttpClientHandler();
+        private readonly ILogger<PublisherController> logger;
+        private readonly IConfiguration configuration;
+
+        public PublisherController(ILogger<PublisherController> logger, 
+                                                    IConfiguration configuration)
         {
-            List<PublisherModel> publisher = new List<PublisherModel>()
+            this.logger = logger;
+            this.configuration = configuration;
+        }
+        public async Task<ActionResult> Index()
+        {
+            PublisherListResponse publisherListResponse = new PublisherListResponse();
+
+            try
+            {
+                using (var httpClient = new HttpClient(this.httpClientHandler))
+
+                {
+                  var response = await httpClient.GetAsync("http://localhost:5000/api/Publisher");
+
+                    if(response.IsSuccessStatusCode)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        publisherListResponse = JsonConvert.DeserializeObject<PublisherListResponse>(apiResponse);
+
+                    }
+                    else
+                    {
+                        // x logica
+                    }
+
+                }
+                return View(publisherListResponse.data);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError("Error obteniendo la auditora", ex.ToString());
+            }
+
+            return View();
+
+        }
+
+        public async Task<ActionResult> Details(string id)
+        {
+            PublisherResponse publisherResponse = new PublisherResponse();
+
+            using (var httpClient = new HttpClient(this.httpClientHandler))
 
             {
-                new PublisherModel
-                { Id = 1,
-                Name = "Albert Whitman & Company",
-                City = "New York",
-                State = "MA",
-                Country = "New York"
-                },
+                var response = await httpClient.GetAsync($"http://localhost:5000/api/Publisher/" + id);
 
-                new PublisherModel
-                { Id = 2,
-                Name = "Bancroft Press",
-                City = "New York",
-                State = "DC",
-                Country = "New York"
-                },
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                     publisherResponse = JsonConvert.DeserializeObject<PublisherResponse>(apiResponse);
 
-                new PublisherModel
-                { Id = 3,
-                Name = "Regal House Publishing",
-                City = "New York",
-                State = "CA",
-                Country = "New York"
-                },
+                }
+                else
+                {
+                    // x logica
+                }
+            }
 
-            };
-            return View(publisher);
-
+                return View(publisherResponse.data);
         }
 
-        // GET: PublisherController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: PublisherController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PublisherController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(PubisherCreateRequest pubisherCreate)
         {
+            BaseResponse baseResponse = new BaseResponse();
             try
             {
-                return RedirectToAction(nameof(Index));
+                pubisherCreate.creationDate = DateTime.Now;
+                pubisherCreate.creationUser = 1;
+                using (var httpClient = new HttpClient(this.httpClientHandler)) 
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(pubisherCreate), Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync("http://localhost:5000/api/Publisher/Save", content);
+
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction(nameof(Index));
+
+                    }
+                    else
+                    {
+                        ViewBag.Message = baseResponse.Message;
+                        return View();
+                    
+                    }
+                
+                }
             }
             catch
             {
@@ -70,41 +127,61 @@ namespace libreriaApp.Web.Controllers
             }
         }
 
-        // GET: PublisherController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            PublisherResponse publisherResponse= new PublisherResponse();
+
+            using (var httpClient = new HttpClient(this.httpClientHandler))
+
+            {
+                var response = await httpClient.GetAsync($"http://localhost:5000/api/Publisher/" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    publisherResponse = JsonConvert.DeserializeObject<PublisherResponse>(apiResponse);
+
+                }
+                else
+                {
+                    // x logica
+                }
+
+            }
+
+            return View(publisherResponse.data);
         }
 
-        // POST: PublisherController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(PublisherUpdateRequest publisherUpdate)
         {
+            BaseResponse baseResponse = new BaseResponse();
+
             try
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                publisherUpdate.modifyDate = DateTime.Now;
+                publisherUpdate.userMod = 1;
+                using (var httpClient = new HttpClient(this.httpClientHandler))
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(publisherUpdate), Encoding.UTF8, "application/json");
 
-        // GET: PublisherController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+                    var response = await httpClient.PutAsync("http://localhost:5000/api/Publisher/Update", content);
 
-        // POST: PublisherController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewBag.Message = baseResponse.Message;
+                        return View();
+                    }
+                }   
             }
             catch
             {

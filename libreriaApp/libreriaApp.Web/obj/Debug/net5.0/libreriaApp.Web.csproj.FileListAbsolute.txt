@@ -284,3 +284,6 @@ C:\proyecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\refint\libre
 C:\proyecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\libreriaApp.Web.pdb
 C:\proyecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\libreriaApp.Web.genruntimeconfig.cache
 C:\proyecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\ref\libreriaApp.Web.dll
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\Razor\Views\Publisher\Edit.cshtml.g.cs
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\Razor\Views\Publisher\Create.cshtml.g.cs
+C:\proyecs\libreriaApp\libreriaApp\libreriaApp.Web\obj\Debug\net5.0\Razor\Views\Publisher\Details.cshtml.g.cs

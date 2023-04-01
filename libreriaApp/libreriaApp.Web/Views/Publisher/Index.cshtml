@@ -13,19 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.pub_id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.pub_name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                @Html.DisplayNameFor(model => model.country)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.State)
+                @Html.DisplayNameFor(model => model.city)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Country)
+                @Html.DisplayNameFor(model => model.state)
             </th>
             <th></th>
         </tr>
@@ -34,24 +34,23 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.pub_id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.pub_name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.City)
+                    @Html.DisplayFor(modelItem => item.country)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.State)
+                    @Html.DisplayFor(modelItem => item.city)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Country)
+                    @Html.DisplayFor(modelItem => item.state)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new {  id=item.pub_id  }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.pub_id  }) |
             </td>
         </tr>
 }
