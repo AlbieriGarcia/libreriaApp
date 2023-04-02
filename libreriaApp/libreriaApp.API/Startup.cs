@@ -1,3 +1,4 @@
+using libreriaApp.API.Dependencies;
 using libreriaApp.BLL.Contracts;
 using libreriaApp.BLL.Services;
 using libreriaApp.DAL.Context;
@@ -34,8 +35,7 @@ namespace libreriaApp.API
             // Context //
             services.AddDbContext<LibreriaContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("LibreriaContext")));
 
-            // Dependencias //
-
+           
             //Repositories
             services.AddScoped<ITitleRepository, TitleRepository>();
 
@@ -43,6 +43,11 @@ namespace libreriaApp.API
             // App services //
 
             services.AddTransient<ITitleService, TitleService>();
+
+            // Dependencias //
+
+            services.AddTitleDependency();
+
 
             services.AddControllers();
 

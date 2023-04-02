@@ -29,9 +29,12 @@ namespace libreriaApp.API.Controllers
         public IActionResult Get()
         {
             var result = this.titleService.GetAll();
+
             if (!result.Success)
+
                 return BadRequest(result);
-            
+
+
             return Ok(result);
         }
 
@@ -40,46 +43,43 @@ namespace libreriaApp.API.Controllers
         public IActionResult Get(string id)
         {
             var result = this.titleService.GetById(id);
-
             return Ok(result);
         }
 
         // POST api/<TitleController>
         [HttpPost("SaveTitle")]
-        public IActionResult Post([FromBody] TitleAddRequest titleAdd)
+        public IActionResult Post([FromBody] TitleAddDto titleAddDto)
         {
-            TitleAddDto title = new TitleAddDto()
-            {
-                title_id = titleAdd.title_id, 
-                title = titleAdd.title,
-                type = titleAdd.type,
-                price = titleAdd.price,
-                advance = titleAdd.advance,
-                royalty = titleAdd.royalty,
-                ytd_sales = titleAdd.ytd_sales,
-                notes = titleAdd.notes,
-                pubdate = titleAdd.pubdate,
-                CreationDate = titleAdd.CreateDate,
-                CreationUser = titleAdd.CreationUser,
-            };
-            var resuls = this.titleService.SaveTitle(title);
-            return Ok(resuls);
+            var result = this.titleService.SaveTitle(titleAddDto);
+
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
 
         // POST api/<TitleController>
         [HttpPost("UpdateTitle")]
-        public IActionResult Put([FromBody] TitleUpdateDto title)
+        public IActionResult Post([FromBody] TitleUpdateDto titleUpdateDto)
         {
-            var result = this.titleService.UpdateTitle(title);
-            return Ok(result);
+            var result = this.titleService.UpdateTitle(titleUpdateDto);
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
+           
         }
 
 
         [HttpPost("RemoveTitle")]
-        public IActionResult Remove([FromBody] TitleRemoveDto title)
+        public IActionResult Remove([FromBody] TitleRemoveDto titleRemoveDto)
         {
-            var resuls = this.titleService.RemoveTitle(title);
-            return Ok(resuls);
+            var result = this.titleService.RemoveTitle(titleRemoveDto);
+
+            if (result.Success)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
     }
 }

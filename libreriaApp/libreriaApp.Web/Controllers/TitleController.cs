@@ -3,50 +3,84 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using libreriaApp.Web.Models;
+using System.Net.Http;
+using Microsoft.Extensions.Configuration;
+using libreriaApp.Web.Models.Response;
+using Microsoft.Extensions.Logging;
+using System;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using libreriaApp.Web.Models.Request;
+using System.Text;
 
 namespace libreriaApp.Web.Controllers
 {
+
     public class TitleController : Controller
     {
+
+        HttpClientHandler httpClientHandler = new HttpClientHandler();
+        private readonly ILogger<TitleController> logger;
+        private readonly IConfiguration configuration;
+
         // GET: TitleController
-        public ActionResult Index()
+        public TitleController(ILogger<TitleController> logger,
+                                 IConfiguration configuration)
         {
-            List<TitleModel> titles = new List<TitleModel>()
+            this.logger = logger;
+            this.configuration = configuration;
+        }
+        public async Task<ActionResult> Index()
+        {
+            TitleListResponse titleListResponse = new TitleListResponse();
+            try
             {
-                new TitleModel()
+                using (var httpClient = new HttpClient(this.httpClientHandler))
                 {
-                    Id = 1,
-                    Title = "Harry Potter and philosopher's stone",
-                    Type = "Fantasy",
-                    Price = 13.99,
-                    PubDate = System.DateTime.Now
-                },
-                new TitleModel()
-                {
-                    Id = 2,
-                    Title = "The Shining",
-                    Type = "Horror",
-                    Price = 19.99,
-                    PubDate = System.DateTime.Now
-                },
-                new TitleModel()
-                {
-                    Id = 3,
-                    Title = "Morning Glory",
-                    Type = "Romance",
-                    Price = 7.99,
-                    PubDate = System.DateTime.Now
-                },
+                    var response = await httpClient.GetAsync("http://localhost:19474/api/Title");
 
-            };
-
-            return View(titles);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        titleListResponse = JsonConvert.DeserializeObject<TitleListResponse>(apiResponse);
+                    }
+                    else
+                    {
+                        
+                    }
+                                
+                }
+                return View(titleListResponse.data);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError("Error obteniendo los titulos", ex.ToString());
+            }
+            return View();
         }
 
         // GET: TitleController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            TitleResponse titleResponse = new TitleResponse();
+
+            using (var httpClient = new HttpClient(this.httpClientHandler))
+            {
+                var response = await httpClient.GetAsync($"http://localhost:19474/api/Title/" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    titleResponse = JsonConvert.DeserializeObject<TitleResponse>(apiResponse);
+                }
+                else
+                {
+
+                }
+           
+            }
+            return View(titleResponse.data);
+
         }
 
         // GET: TitleController/Create
@@ -58,11 +92,36 @@ namespace libreriaApp.Web.Controllers
         // POST: TitleController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(TitleCreateRequest titleCreateRequest)
         {
+            BaseResponse baseResponse = new BaseResponse();
             try
             {
-                return RedirectToAction(nameof(Index));
+                titleCreateRequest.CreateDate = DateTime.Now;
+                titleCreateRequest.CreationUser = 1;
+                using (var httpClient = new HttpClient(this.httpClientHandler))
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(titleCreateRequest), Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync("http://localhost:19474/api/Title/SaveTitle", content);
+
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewBag.Message = baseResponse.Message;
+                        return View();
+                    }
+
+                }
+
+
             }
             catch
             {
@@ -71,19 +130,61 @@ namespace libreriaApp.Web.Controllers
         }
 
         // GET: TitleController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            TitleResponse titleResponse = new TitleResponse();
+
+            using (var httpClient = new HttpClient(this.httpClientHandler))
+            {
+                var response = await httpClient.GetAsync($"http://localhost:19474/api/Title/"+ id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    titleResponse = JsonConvert.DeserializeObject<TitleResponse>(apiResponse);
+
+                }
+                else
+                {
+
+                }
+
+                return View(titleResponse.data);
+            }
+            
         }
 
         // POST: TitleController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(TitleUpdateRequest titleUpdateRequest)
         {
+            BaseResponse baseResponse = new BaseResponse();
             try
             {
-                return RedirectToAction(nameof(Index));
+                titleUpdateRequest.ModifyDate = DateTime.Now;
+                titleUpdateRequest.UserMod = 1;
+                using (var httpClient = new HttpClient(this.httpClientHandler))
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(titleUpdateRequest), Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync("http://localhost:19474/api/Title/UpdateTitle", content);
+
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
+
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewBag.Message = baseResponse.Message;
+                        return View();
+                    }
+                }
+
             }
             catch
             {
@@ -91,25 +192,7 @@ namespace libreriaApp.Web.Controllers
             }
         }
 
-        // GET: TitleController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: TitleController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿using libreriaApp.BLL.Contracts;
 using libreriaApp.BLL.Core;
 using libreriaApp.BLL.Dtos.Title;
+using libreriaApp.BLL.Extentions;
 using libreriaApp.BLL.Models;
 using libreriaApp.DAL.Entities;
 using libreriaApp.DAL.Interfaces;
@@ -118,28 +119,54 @@ namespace libreriaApp.BLL.Services
 
         public ServiceResult SaveTitle(TitleAddDto titleAdd)
         {
+            this.logger.LogInformation("Paso por aqui", titleAdd.title);
             ServiceResult result = new ServiceResult();
+
+            if (string.IsNullOrEmpty(titleAdd.title))
+            {
+                result.Success = false;
+                result.Message = "El nombre del título es requerido";
+                return result;
+            }
+
+            if (titleAdd.title.Length > 80)
+            {
+                result.Success = false;
+                result.Message = "La logitud del nombre es inválida";
+                return result;
+            }
+
+            if (string.IsNullOrEmpty(titleAdd.type))
+            {
+                result.Success = false;
+                result.Message = "El tipo es requerido";
+                return result;
+            }
+            if (titleAdd.type.Length > 30)
+            {
+                result.Success = false;
+                result.Message = "La logintud del tipo es inválida";
+                return result;
+            }
+
+            if (titleAdd.notes.Length > 250)
+            {
+                result.Success = false;
+                result.Message = "La logintud de la descripción es inválida";
+                return result;
+            }
+
 
             try
             {
-                Title title = new Title()
-                {
-                    title_id = titleAdd.title_id,
-                    title = titleAdd.title,
-                    type = titleAdd.type,
-                    price = titleAdd.price,
-                    advance = titleAdd.advance,
-                    royalty = titleAdd.royalty,
-                    ytd_sales = titleAdd.ytd_sales,
-                    notes = titleAdd.notes,
-                    pubdate = titleAdd.pubdate,
-                    CreationDate = titleAdd.CreationDate,
-                    CreationUser = titleAdd.CreationUser
 
-                };
+                Title title = titleAdd.GetTitleEntityFromDtoSave();
                 this.titleRepository.Save(title);
-                this.titleRepository.SaveChanges();
-                result.Message = "El título fue guardado correctamente.";
+                result.Success = true;
+                result.Message = "El Titulo ha sido agregado correctamente.";
+
+                this.logger.LogInformation(result.Message, result);
+
             }
             catch (Exception ex)
             {
@@ -153,6 +180,40 @@ namespace libreriaApp.BLL.Services
         public ServiceResult UpdateTitle(TitleUpdateDto titleUpdate)
         {
             ServiceResult result = new ServiceResult();
+
+            if (string.IsNullOrEmpty(titleUpdate.title))
+            {
+                result.Success = false;
+                result.Message = "El nombre del título es requerido";
+                return result;
+            }
+
+            if (titleUpdate.title.Length > 80)
+            {
+                result.Success = false;
+                result.Message = "La logitud del nombre es inválida";
+                return result;
+            }
+
+            if (string.IsNullOrEmpty(titleUpdate.type))
+            {
+                result.Success = false;
+                result.Message = "El tipo es requerido";
+                return result;
+            }
+            if (titleUpdate.type.Length > 30)
+            {
+                result.Success = false;
+                result.Message = "La logintud del tipo es inválida";
+                return result;
+            }
+
+            if (titleUpdate.notes.Length > 250)
+            {
+                result.Success = false;
+                result.Message = "La logintud de la descripción es inválida";
+                return result;
+            }
 
             try
             {
@@ -177,7 +238,7 @@ namespace libreriaApp.BLL.Services
             }
             catch (Exception ex)
             {
-                result.Message = "Error Guardando el título.";
+                result.Message = "Error Editando el título.";
                 result.Success = false;
                 this.logger.LogError($"{result.Message}", ex.ToString());
             }

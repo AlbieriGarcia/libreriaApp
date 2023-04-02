@@ -1,0 +1,77 @@
+﻿@model libreriaApp.Web.Models.TitleModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details: @Model.title</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.title_id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.title_id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.type)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.type)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.advance)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.advance)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.royalty)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.royalty)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ytd_sales)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ytd_sales)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.notes)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.pubdate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.pubdate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.creationDateDisplay)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.creationDateDisplay)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -4,10 +4,15 @@ namespace libreriaApp.Web.Models
 {
     public class TitleModel
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Type { get; set; }
-        public double Price { get; set; }
-        public DateTime PubDate { get; set; }
+        public string title_id { get; set; }
+        public string title { get; set; }
+        public string type { get; set; }
+        public Decimal? price { get; set; }
+        public Decimal? advance { get; set; }
+        public int? royalty { get; set; }
+        public int? ytd_sales { get; set; }
+        public string? notes { get; set; }
+        public DateTime pubdate { get; set; }
+        public DateTime creationDateDisplay { get; set; }
     }
 }
