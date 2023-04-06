@@ -3,6 +3,7 @@ using libreriaApp.BLL.Core;
 using libreriaApp.BLL.Dtos.Publisher;
 using libreriaApp.BLL.Extentions;
 using libreriaApp.BLL.Models;
+using libreriaApp.BLL.Validations;
 using libreriaApp.DAL.Entities;
 using libreriaApp.DAL.Exceptions;
 using libreriaApp.DAL.Interfaces;
@@ -14,7 +15,7 @@ using System.Linq;
 
 namespace libreriaApp.BLL.Services
 {
-    public class PublisherService : Contract.IPublisherService
+    public class PublisherService : IPublisherService
 
     {
         private readonly IPublisherRepository PublisherRepository;
@@ -100,117 +101,50 @@ namespace libreriaApp.BLL.Services
             return result;
         }
 
-
-
         public ServiceResult SavePublisher(PublisherAddDto publisherAdd)
         {
             ServiceResult result = new ServiceResult();
 
+            try
+            {
+                result = PublisherValidation.IsValidPublisherAdd(publisherAdd);
 
-            if (string.IsNullOrEmpty(publisherAdd.pub_id))
-            {
-                result.Success = false;
-                result.Message = "El id es requerido";
-                return result;
             }
-            if (string.IsNullOrEmpty(publisherAdd.pub_name))
+            catch (PublisherDataException adex)
             {
+                result.Message = adex.Message;
                 result.Success = false;
-                result.Message = "El pub_name es requerido";
-            }
-            if (publisherAdd.pub_name.Length > 40)
-            {
-                result.Success = false;
-                result.Message = "La longitud del nombre es invalida(max40)";
-                return result;
-            }
-            if (string.IsNullOrEmpty(publisherAdd.city))
-            {
-                result.Success = false;
-                result.Message = "La ciudad es requerida";
-                return result;
-            }
-            if (publisherAdd.city.Length > 20)
-            {
-                result.Success = false;
-                result.Message = "La longitud de la ciudad es invalidad(max20)";
-                return result;
-            }
-            if (publisherAdd.state?.Length > 2)
-            {
-                result.Success = false;
-                result.Message = "La longitud de state es invalidad(max2)";
-                return result;
+                this.logger.LogError($"{result.Message}", adex.ToString());
             }
             try
             {
                 Publisher publisher = publisherAdd.GetPublisherEntityFromDtoSave();
                 this.PublisherRepository.Save(publisher);
-                result.Success = true;
-                result.Message = "La Editorial a sido agregada correctamente";
+                this.PublisherRepository.SaveChanges();
+                result.Message = "El autor fue insertado correctamente";
             }
-            catch (PublisherDataException sdex)
+            catch (Exception ex)
             {
-                result.Message = sdex.Message;
-                result.Success = false;
-                this.logger.LogError($"{result.Message}", sdex.ToString());
-            }
-            catch (Exception ex) 
-            {
-                result.Message = "A sucedido un error agregando la Editorial";
+                result.Message = "Error guardando las editoras";
                 result.Success = false;
                 this.logger.LogError($"{result.Message}", ex.ToString());
-
-
             }
-            return result;
+            return (result);
         }
+
+
         public ServiceResult UpdatePublisher(PublisherUpdateDto publisherUpdate)
         {
             ServiceResult result = new ServiceResult();
             try
             {
-
-                if (string.IsNullOrEmpty(publisherUpdate.pub_id))
-                {
-                    result.Success = false;
-                    result.Message = "El id es requerido";
-                    return result;
-                }
-                if (string.IsNullOrEmpty(publisherUpdate.pub_name))
-                {
-                    result.Success = false;
-                    result.Message = "El pub_name es requerido";
-                }
-                if (publisherUpdate.pub_name.Length > 40)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud del nombre es invalida(max40)";
-                    return result;
-                }
-                if (string.IsNullOrEmpty(publisherUpdate.city))
-                {
-                    result.Success = false;
-                    result.Message = "La ciudad es requerida";
-                    return result;
-                }
-                if (publisherUpdate.city.Length > 20)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud de la ciudad es invalidad(max20)";
-                    return result;
-                }
-                if (publisherUpdate.state?.Length > 2)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud de state es invalidad(max2)";
-                    return result;
-                }
+                result = PublisherValidation.IsValidPublisherUpd(publisherUpdate);
 
                 Publisher publisher = this.PublisherRepository.GetEntity(publisherUpdate.pub_id);
+
+                publisher.pub_id = publisherUpdate.pub_id;
                 publisher.ModifyDate = publisherUpdate.ModifyDate;
                 publisher.UserMod = publisherUpdate.UserMod;
-                publisher.pub_id= publisherUpdate.pub_id;
                 publisher.pub_name = publisherUpdate.pub_name;
                 publisher.city = publisherUpdate.city;
                 publisher.country = publisherUpdate.country;
@@ -228,12 +162,12 @@ namespace libreriaApp.BLL.Services
             }
             catch (Exception ex) 
             {
-                result.Message = "Ocurrio un error editando el registro";
+                result.Message = "Ocurrio un error editando a la editorial";
                 result.Success = false;
                 this.logger.LogError(result.Message, ex.ToString());
             
             }
-            return result;
+            return (result);
         }
         public ServiceResult RemoverPublisher(PublisherRemoveDto publisherRemove)
         {
@@ -250,7 +184,7 @@ namespace libreriaApp.BLL.Services
 
                 this.PublisherRepository.Update(publisher);
                 this.PublisherRepository.SaveChanges();
-                result.Message = "La auditora se elimino correctamente";
+                result.Message = "La auditora fue removida correctamente";
 
 
             }

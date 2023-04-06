@@ -1,7 +1,7 @@
-﻿using libreriaApp.Web.Models;
+﻿using libreriaApp.Web.ApiServices.Interfaces;
+using libreriaApp.Web.Models;
 using libreriaApp.Web.Models.Request;
 using libreriaApp.Web.Models.Response;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -18,10 +18,13 @@ namespace libreriaApp.Web.Controllers
         HttpClientHandler httpClientHandler = new HttpClientHandler();
         private readonly ILogger<PublisherController> logger;
         private readonly IConfiguration configuration;
+        private readonly IPublisherApiService publisherApiService;
 
         public PublisherController(ILogger<PublisherController> logger, 
-                                                    IConfiguration configuration)
+                                                    IConfiguration configuration,
+                                                    IPublisherApiService publisherApiService)
         {
+            this.publisherApiService = publisherApiService;
             this.logger = logger;
             this.configuration = configuration;
         }
@@ -29,60 +32,26 @@ namespace libreriaApp.Web.Controllers
         {
             PublisherListResponse publisherListResponse = new PublisherListResponse();
 
-            try
+            publisherListResponse = await this.publisherApiService.GetPublisher();
+
+            if (!publisherListResponse.success)
             {
-                using (var httpClient = new HttpClient(this.httpClientHandler))
-
-                {
-                  var response = await httpClient.GetAsync("http://localhost:5000/api/Publisher");
-
-                    if(response.IsSuccessStatusCode)
-                    {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        publisherListResponse = JsonConvert.DeserializeObject<PublisherListResponse>(apiResponse);
-
-                    }
-                    else
-                    {
-                        // x logica
-                    }
-
-                }
-                return View(publisherListResponse.data);
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError("Error obteniendo la auditora", ex.ToString());
+                return View();
             }
 
-            return View();
+            return View(publisherListResponse.data);
 
         }
 
         public async Task<ActionResult> Details(string id)
         {
+
             PublisherResponse publisherResponse = new PublisherResponse();
 
-            using (var httpClient = new HttpClient(this.httpClientHandler))
+            publisherResponse = await this.publisherApiService.GetPublisher(id);
 
-            {
-                var response = await httpClient.GetAsync($"http://localhost:5000/api/Publisher/" + id);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                     publisherResponse = JsonConvert.DeserializeObject<PublisherResponse>(apiResponse);
-
-                }
-                else
-                {
-                    // x logica
-                }
-            }
-
-                return View(publisherResponse.data);
+            return View(publisherResponse.data);
         }
-
         public ActionResult Create()
         {
             return View();
@@ -93,63 +62,24 @@ namespace libreriaApp.Web.Controllers
         public async Task<ActionResult> Create(PubisherCreateRequest pubisherCreate)
         {
             BaseResponse baseResponse = new BaseResponse();
-            try
+            baseResponse = await this.publisherApiService.Save(pubisherCreate);
+
+            if (baseResponse.Success != true)
             {
-                pubisherCreate.creationDate = DateTime.Now;
-                pubisherCreate.creationUser = 1;
-                using (var httpClient = new HttpClient(this.httpClientHandler)) 
-                {
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(pubisherCreate), Encoding.UTF8, "application/json");
-
-                    var response = await httpClient.PostAsync("http://localhost:5000/api/Publisher/Save", content);
-
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-
-                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction(nameof(Index));
-
-                    }
-                    else
-                    {
-                        ViewBag.Message = baseResponse.Message;
-                        return View();
-                    
-                    }
-                
-                }
-            }
-            catch
-            {
+                ViewBag.Message = baseResponse.Message;
                 return View();
             }
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<ActionResult> Edit(string id)
         {
             PublisherResponse publisherResponse= new PublisherResponse();
 
-            using (var httpClient = new HttpClient(this.httpClientHandler))
-
-            {
-                var response = await httpClient.GetAsync($"http://localhost:5000/api/Publisher/" + id);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    publisherResponse = JsonConvert.DeserializeObject<PublisherResponse>(apiResponse);
-
-                }
-                else
-                {
-                    // x logica
-                }
-
-            }
+            publisherResponse = await this.publisherApiService.Edit(id);
 
             return View(publisherResponse.data);
+           
         }
 
         [HttpPost]
@@ -158,35 +88,16 @@ namespace libreriaApp.Web.Controllers
         {
             BaseResponse baseResponse = new BaseResponse();
 
-            try
+            baseResponse = await this.publisherApiService.Update(publisherUpdate);
+
+            if (baseResponse.Success != true) 
             {
-                publisherUpdate.modifyDate = DateTime.Now;
-                publisherUpdate.userMod = 1;
-                using (var httpClient = new HttpClient(this.httpClientHandler))
-                {
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(publisherUpdate), Encoding.UTF8, "application/json");
-
-                    var response = await httpClient.PutAsync("http://localhost:5000/api/Publisher/Update", content);
-
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-
-                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        ViewBag.Message = baseResponse.Message;
-                        return View();
-                    }
-                }   
-            }
-            catch
-            {
+                ViewBag.Message = baseResponse?.Message;
                 return View();
+            }
+
+            return RedirectToAction(nameof(Index));
+
             }
         }
     }
-}

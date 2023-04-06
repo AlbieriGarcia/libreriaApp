@@ -8,6 +8,12 @@
 
 <h4>Crear Editora</h4>
 <hr />
+@if (ViewBag.Message != null)
+{
+    <div class="text-danger">
+        @ViewBag.Message
+    </div>
+}
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
