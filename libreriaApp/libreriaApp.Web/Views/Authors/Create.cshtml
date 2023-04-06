@@ -4,10 +4,18 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Agregar</h1>
 
-<h4>AuthorsModels</h4>
+<h4>Agregando los autores</h4>
 <hr />
+
+@if (ViewBag.Message != null)
+{
+    <div class="text-danger">
+        @ViewBag.Message
+    </div>
+
+}
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">

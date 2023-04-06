@@ -4,6 +4,6 @@
     {
         public bool success { get; set; }
         public AuthorsModels data { get; set; }
-        public object message { get; set; }
+        public string message { get; set; }
     }
 }

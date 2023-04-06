@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\libreriaApp.BLL",
-    "\\libreriaApp.BLL\\Services",
     "\\libreriaApp.DAL",
-    "\\libreriaApp.DAL\\Entities",
     "\\libreriaApp.DAL\\Repositories",
     "\\libreriaApp.Web",
+    "\\libreriaApp.Web\\ApiServices",
+    "\\libreriaApp.Web\\ApiServices\\Services",
     "\\libreriaApp.Web\\Controllers",
     "\\libreriaApp.Web\\Views",
+    "\\libreriaApp.Web\\Views\\Authors",
     "\\libreriaApp.Web\\Views\\Shared"
   ],
-  "SelectedNode": "\\libreriaApp.BLL\\Services\\AuthorsService.cs",
+  "SelectedNode": "\\libreriaApp.Web\\ApiServices\\Services\\AuthorsApiService.cs",
   "PreviewInSolutionExplorer": false
 }

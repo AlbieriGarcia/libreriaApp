@@ -1,4 +1,5 @@
-﻿using libreriaApp.Web.Models.Request;
+﻿using libreriaApp.Web.ApiServices.Interfaces;
+using libreriaApp.Web.Models.Request;
 using libreriaApp.Web.Models.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,39 +20,25 @@ namespace libreriaApp.Web.Controllers
         HttpClientHandler httpClientHandler = new HttpClientHandler();
         private readonly ILogger<AuthorsController> logger;
         private readonly IConfiguration configuration;
+        private readonly IAuthorsApiService authorsApiService;
 
         public AuthorsController(ILogger<AuthorsController> logger,
-            IConfiguration configuration)
+            IConfiguration configuration, IAuthorsApiService authorsApiService)
         {
             this.logger = logger;
             this.configuration = configuration;
+            this.authorsApiService = authorsApiService;
         }
         public async Task<ActionResult> Index()
         {
             AuthorsListResponse authorsListResponse = new AuthorsListResponse();
 
-            try
-            {
-                using (var httpClient = new HttpClient(this.httpClientHandler))
-                {
-                    var response = await httpClient.GetAsync($"http://localhost:19474/api/Authors");
+            authorsListResponse = await this.authorsApiService.GetAuthors();
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        authorsListResponse = JsonConvert.DeserializeObject<AuthorsListResponse>(apiResponse);
-                    }
-                    else
-                    {
-                        // realizar x logica
-                    }
-                }
-            }
-            catch (Exception ex)
+            if(!authorsListResponse.success)
             {
-                this.logger.LogError("Error obteniendo los autores", ex.ToString());
+                return View();
             }
-
             return View(authorsListResponse.data);
         }
 
@@ -59,20 +46,9 @@ namespace libreriaApp.Web.Controllers
         public async Task<ActionResult> Details(string id)
         {
             AuthorsResponse authorsReponse = new AuthorsResponse();
-            using (var httpClient = new HttpClient(this.httpClientHandler))
-            {
-                var response = await httpClient.GetAsync($"http://localhost:19474/api/Authors/" + id);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    authorsReponse = JsonConvert.DeserializeObject<AuthorsResponse>(apiResponse);
-                }
-                else
-                {
-                    // realizar x logica
-                }
-            }
+            authorsReponse = await this.authorsApiService.GetAuthors(id);
+
             return View(authorsReponse.data);
         }
 
@@ -88,36 +64,15 @@ namespace libreriaApp.Web.Controllers
         public async Task<ActionResult> Create(AuthorsCreateRequest authorsCreateRequest)
         {
             BaseResponse baseResponse = new BaseResponse();
-            try
+            baseResponse = await this.authorsApiService.Save(authorsCreateRequest);
+
+            if (baseResponse.Success != true)
             {
-                authorsCreateRequest.CreationDate = DateTime.Now;
-                authorsCreateRequest.CreationUser = 1;
-                using (var httpClient = new HttpClient(this.httpClientHandler))
-                {
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(authorsCreateRequest), Encoding.UTF8, "application/json");
-
-                    var response = await httpClient.PostAsync("http://localhost:19474/api/Authors/SaveAuthors", content);
-
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-
-                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        ViewBag.Message = baseResponse.Message;
-                        return View();
-                    }
-                }
-            
-            }
-            catch
-            {
+                ViewBag.Message = baseResponse.Message;
                 return View();
             }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: AuthorsController/Edit/5
@@ -125,60 +80,26 @@ namespace libreriaApp.Web.Controllers
         {
             AuthorsResponse authorsReponse = new AuthorsResponse();
 
-            using (var httpClient = new HttpClient(this.httpClientHandler))
-            {
-                var response = await httpClient.GetAsync($"http://localhost:19474/api/Authors/" + id);
+            authorsReponse = await this.authorsApiService.Edit(id);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    authorsReponse = JsonConvert.DeserializeObject<AuthorsResponse>(apiResponse);
-                }
-                else
-                {
-                    // realizar x logica
-                }
-            }
             return View(authorsReponse.data);
         }
 
         // POST: AuthorsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult>Edit(AuthorsUpdateRequest authorsUpdateRequest)
+        public async Task<ActionResult> Edit(AuthorsUpdateRequest authorsUpdateRequest)
         {
             BaseResponse baseResponse = new BaseResponse();
-            try
+            baseResponse = await this.authorsApiService.Update(authorsUpdateRequest);
+
+            if (baseResponse.Success != true)
             {
-                authorsUpdateRequest.ModifyDate = DateTime.Now;
-                authorsUpdateRequest.UserMod = 1;
-                using (var httpClient = new HttpClient(this.httpClientHandler))
-                {
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(authorsUpdateRequest), Encoding.UTF8, "application/json");
-
-                    var response = await httpClient.PutAsync("http://localhost:19474/api/Authors/UpdateAuthros", content);
-                    
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-
-                    baseResponse = JsonConvert.DeserializeObject<BaseResponse>(apiResponse);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        ViewBag.Message = baseResponse.Message;
-                        return View();
-                    }
-                }
-               
-            }
-            catch
-            {
+                ViewBag.Message = baseResponse.Message;
                 return View();
             }
+        
+            return RedirectToAction(nameof(Index));
         }
-
     }
 }

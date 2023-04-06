@@ -3,6 +3,7 @@ using libreriaApp.BLL.Core;
 using libreriaApp.BLL.Dtos.Authors;
 using libreriaApp.BLL.Extentions;
 using libreriaApp.BLL.Models;
+using libreriaApp.BLL.Validations;
 using libreriaApp.DAL.Entities;
 using libreriaApp.DAL.Exceptions;
 using libreriaApp.DAL.Interfaces;
@@ -99,61 +100,8 @@ namespace libreriaApp.BLL.Services
             ServiceResult result = new ServiceResult();
             try
             {
-                if (string.IsNullOrEmpty(authorsAdd.au_id))
-                {
-                    result.Success = false;
-                    result.Message = "El id del autor es requerido";
-                    return result;
-                }
 
-                if (string.IsNullOrEmpty(authorsAdd.au_fname))
-                {
-                    result.Success = false;
-                    result.Message = "El nombre es requerido";
-                    return result;
-                }
-
-                if (authorsAdd.au_fname.Length > 40)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud del nombre es inválida";
-                    return result;
-                }
-
-                if (string.IsNullOrEmpty(authorsAdd.au_lname))
-                {
-                    result.Success = false;
-                    result.Message = "El apellido es requerido";
-                    return result;
-                }
-
-                if (authorsAdd.au_lname.Length > 40)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud del apellido es invalido";
-                    return result;
-                }
-
-                if (string.IsNullOrEmpty(authorsAdd.phone))
-                {
-                    result.Success = false;
-                    result.Message = "El telefono es requerido";
-                    return result;
-                }
-
-                if (authorsAdd.address.Length > 40)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud de la direccion es invalida";
-                    return result;
-                }
-
-                if (authorsAdd.city.Length > 20)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud de la ciudad es invalida";
-                    return result;
-                }
+                result = ValidationAuthors.IsValidAuthorsAdd(authorsAdd);
             }
             catch (AuthorsDataException adex)
             {
@@ -187,68 +135,7 @@ namespace libreriaApp.BLL.Services
             try
             {
 
-                if (string.IsNullOrEmpty(authorsUpdate.au_id))
-                {
-                    result.Success = false;
-                    result.Message = "El id del autor es requerido";
-                    return result;
-                }
-
-                if (string.IsNullOrEmpty(authorsUpdate.au_fname))
-                {
-                    result.Success = false;
-                    result.Message = "El nombre es requerido";
-                    return result;
-                }
-
-                if (authorsUpdate.au_fname.Length > 40)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud del nombre es inválida";
-                    return result;
-                }
-
-                if (string.IsNullOrEmpty(authorsUpdate.au_lname))
-                {
-                    result.Success = false;
-                    result.Message = "El apellido es requerido";
-                    return result;
-                }
-
-                if (authorsUpdate.au_lname.Length > 40)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud del apellido es invalido";
-                    return result;
-                }
-
-                if (string.IsNullOrEmpty(authorsUpdate.phone))
-                {
-                    result.Success = false;
-                    result.Message = "El telefono es requerido";
-                    return result;
-                }
-
-                if (authorsUpdate.address.Length > 40)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud de la direccion es invalida";
-                    return result;
-                }
-
-                if (authorsUpdate.city.Length > 20)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud de la ciudad es invalida";
-                    return result;
-                }
-
-                if (authorsUpdate.state.Length > 2)
-                {
-                    result.Success = false;
-                    result.Message = "La longitud de la state es invalida";
-                    return result;
-                }
+                result = ValidationAuthors.IsValidAuthorsUpd(authorsUpdate);
 
                 Authors authors = this.authorsRepository.GetEntity(authorsUpdate.au_id);
 

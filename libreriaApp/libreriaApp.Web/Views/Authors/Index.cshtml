@@ -4,7 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Listado De Los Autores</h1>
+<h1>Listado De Los Autores
+</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -74,7 +75,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.au_id }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.au_id  }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.au_id  }) 
             </td>
         </tr>
 }

@@ -1,3 +1,5 @@
+using libreriaApp.Web.ApiServices.Interfaces;
+using libreriaApp.Web.ApiServices.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +24,9 @@ namespace libreriaApp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             services.AddControllersWithViews();
+            services.AddTransient<IAuthorsApiService, AuthorsApiService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
