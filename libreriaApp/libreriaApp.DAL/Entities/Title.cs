@@ -16,7 +16,6 @@ namespace libreriaApp.DAL.Entities
         public int? ytd_sales { get; set; }
         public string? notes { get; set; }
         public DateTime pubdate { get; set; }
-
-
+        public DateTime StartDate { get; set; }
     }
 }

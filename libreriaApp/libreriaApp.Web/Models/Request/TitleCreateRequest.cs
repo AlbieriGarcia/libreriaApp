@@ -14,6 +14,7 @@ namespace libreriaApp.Web.Models.Request
         public string? notes { get; set; }
         public DateTime pubdate { get; set; }
         public DateTime CreateDate { get; set; }
+        public DateTime startDate { get; set; }
         public int CreationUser { get; set; }
     }
 }

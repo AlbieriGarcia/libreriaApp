@@ -3,8 +3,11 @@ using libreriaApp.BLL.Core;
 using libreriaApp.BLL.Dtos.Title;
 using libreriaApp.BLL.Extentions;
 using libreriaApp.BLL.Models;
+using libreriaApp.BLL.Validations;
 using libreriaApp.DAL.Entities;
+using libreriaApp.DAL.Exceptions;
 using libreriaApp.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -38,7 +41,9 @@ namespace libreriaApp.BLL.Services
                     royalty = dep.royalty,
                     ytd_sales = dep.ytd_sales,
                     notes =dep.notes,
-                    pubdate = dep.pubdate
+                    pubdate = dep.pubdate,
+                    CreateDate = dep.CreationDate,
+                    StartDate = dep.StartDate,
 
 
                 }).ToList();
@@ -74,7 +79,9 @@ namespace libreriaApp.BLL.Services
                     royalty = title.royalty,
                     ytd_sales = title.ytd_sales,
                     notes = title.notes,
-                    pubdate = title.pubdate
+                    pubdate = title.pubdate,
+                    CreateDate = title.CreationDate,
+                    StartDate = title.StartDate
                 };
 
                 result.Data = titleModel;
@@ -91,85 +98,39 @@ namespace libreriaApp.BLL.Services
             return result;
         }
 
-        public ServiceResult RemoveTitle(TitleRemoveDto titleRemove)
+        public ServiceResult SaveTitle(TitleAddDto addDto)
         {
+            
             ServiceResult result = new ServiceResult();
 
             try
             {
-                DAL.Entities.Title title = this.titleRepository.GetEntity(titleRemove.title_id);
+                result = TitleValidation.IsValidTitleAdd(addDto);
 
-                title.title_id = titleRemove.title_id;
-                title.DeletedDate = titleRemove.DeletedDate;
-                title.Deleted = true;
-                title.UserDeleted = titleRemove.UserDeleted;
-               
-                this.titleRepository.Update(title);
-                this.titleRepository.SaveChanges();
-                result.Message = "El título fue removido correctamente.";
             }
-            catch (Exception ex)
+            catch (TitleDataException ex)
             {
-                result.Message = "Error Removiendo el título.";
-                result.Success=false;
+                result.Message = ex.Message;
+                result.Success = false;
                 this.logger.LogError($"{result.Message}", ex.ToString());
             }
-            return result;
-        }
-
-        public ServiceResult SaveTitle(TitleAddDto titleAdd)
-        {
-            this.logger.LogInformation("Paso por aqui", titleAdd.title);
-            ServiceResult result = new ServiceResult();
-
-            if (string.IsNullOrEmpty(titleAdd.title))
-            {
-                result.Success = false;
-                result.Message = "El nombre del título es requerido";
-                return result;
-            }
-
-            if (titleAdd.title.Length > 80)
-            {
-                result.Success = false;
-                result.Message = "La logitud del nombre es inválida";
-                return result;
-            }
-
-            if (string.IsNullOrEmpty(titleAdd.type))
-            {
-                result.Success = false;
-                result.Message = "El tipo es requerido";
-                return result;
-            }
-            if (titleAdd.type.Length > 30)
-            {
-                result.Success = false;
-                result.Message = "La logintud del tipo es inválida";
-                return result;
-            }
-
-            if (titleAdd.notes.Length > 250)
-            {
-                result.Success = false;
-                result.Message = "La logintud de la descripción es inválida";
-                return result;
-            }
 
 
             try
             {
 
-                Title title = titleAdd.GetTitleEntityFromDtoSave();
+                Title title = addDto.GetTitleEntityFromDtoSave();
                 this.titleRepository.Save(title);
+                this.titleRepository.SaveChanges();
                 result.Success = true;
                 result.Message = "El Titulo ha sido agregado correctamente.";
 
                 this.logger.LogInformation(result.Message, result);
 
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
+               
                 result.Message = "Error Guardando el título.";
                 result.Success = false;
                 this.logger.LogError($"{result.Message}", ex.ToString());
@@ -177,68 +138,69 @@ namespace libreriaApp.BLL.Services
             return result;
         }
 
-        public ServiceResult UpdateTitle(TitleUpdateDto titleUpdate)
+        public ServiceResult UpdateTitle(TitleUpdateDto updateDto)
         {
             ServiceResult result = new ServiceResult();
 
-            if (string.IsNullOrEmpty(titleUpdate.title))
-            {
-                result.Success = false;
-                result.Message = "El nombre del título es requerido";
-                return result;
-            }
-
-            if (titleUpdate.title.Length > 80)
-            {
-                result.Success = false;
-                result.Message = "La logitud del nombre es inválida";
-                return result;
-            }
-
-            if (string.IsNullOrEmpty(titleUpdate.type))
-            {
-                result.Success = false;
-                result.Message = "El tipo es requerido";
-                return result;
-            }
-            if (titleUpdate.type.Length > 30)
-            {
-                result.Success = false;
-                result.Message = "La logintud del tipo es inválida";
-                return result;
-            }
-
-            if (titleUpdate.notes.Length > 250)
-            {
-                result.Success = false;
-                result.Message = "La logintud de la descripción es inválida";
-                return result;
-            }
-
             try
             {
-                Title title = this.titleRepository.GetEntity(titleUpdate.title_id);
 
-                title.title_id = titleUpdate.title_id;
-                title.title = titleUpdate.title;
-                title.type = titleUpdate.type; 
-                title.price = titleUpdate.price;
-                title.advance = titleUpdate.advance;
-                title.royalty = titleUpdate.royalty;
-                title.ytd_sales = titleUpdate.ytd_sales;
-                title.notes = titleUpdate.notes;
-                title.pubdate = titleUpdate.pubdate;
-                title.ModifyDate = titleUpdate.ModifyDate;
-                title.UserMod = titleUpdate.UserMod;
+                result = TitleValidation.IsValidTitleUpd(updateDto);
 
-                
+                Title title = this.titleRepository.GetEntity(updateDto.title_id);
+
+                title.title_id = updateDto.title_id;
+                title.title = updateDto.title;
+                title.type = updateDto.type;
+                title.price = updateDto.price;
+                title.advance = updateDto.advance;
+                title.royalty = updateDto.royalty;
+                title.ytd_sales = updateDto.ytd_sales;
+                title.notes = updateDto.notes;
+                title.pubdate = updateDto.pubdate;
+                title.ModifyDate = updateDto.ModifyDate;
+                title.UserMod = updateDto.UserMod;
+
+
                 this.titleRepository.Update(title);
                 this.titleRepository.SaveChanges();
                 result.Message = "El título fue modificado correctamente.";
             }
+            catch (TitleDataException sdex)
+            {
+                result.Message = sdex.Message;
+                result.Success = false;
+                this.logger.LogError($"{result.Message}", sdex.ToString());
+            }
+            
             catch (Exception ex)
             {
                 result.Message = "Error Editando el título.";
+                result.Success = false;
+                this.logger.LogError($"{result.Message}", ex.ToString());
+            }
+            return result;
+        }
+        public ServiceResult RemoveTitle(TitleRemoveDto removeDto)
+        {
+            ServiceResult result = new ServiceResult();
+
+            try
+            {
+                Title titleToRemove = this.titleRepository.GetEntity(removeDto.title_id);
+
+                titleToRemove.title_id = removeDto.title_id;
+                titleToRemove.DeletedDate = removeDto.RemoveDate;
+                titleToRemove.Deleted = removeDto.Removed;
+                titleToRemove.UserDeleted = removeDto.RemoveUser;
+
+                this.titleRepository.Update(titleToRemove);
+                result.Success = true;
+                result.Message = "El título fue removido correctamente.";
+            }
+            catch (Exception ex)
+            {
+                result.Message = "Error Removiendo el título.";
                 result.Success = false;
                 this.logger.LogError($"{result.Message}", ex.ToString());
             }

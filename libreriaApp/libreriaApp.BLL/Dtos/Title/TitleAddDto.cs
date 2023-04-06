@@ -15,5 +15,6 @@ namespace libreriaApp.BLL.Dtos.Title
         public DateTime pubdate { get; set; }
         public DateTime CreationDate { get; set; }
         public int CreationUser { get; set; }
+        public DateTime StartDate { get; set; }
     }
 }

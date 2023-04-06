@@ -13,6 +13,7 @@ namespace libreriaApp.Web.Models.Request
         public int? ytd_sales { get; set; }
         public string? notes { get; set; }
         public DateTime pubdate { get; set; }
+        public DateTime startDate { get; set; }
         public DateTime ModifyDate { get; set; }
         public int UserMod { get; set; }
     }

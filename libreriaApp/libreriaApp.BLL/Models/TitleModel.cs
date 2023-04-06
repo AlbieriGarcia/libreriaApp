@@ -14,13 +14,20 @@ namespace libreriaApp.BLL.Models
         public string? notes { get; set; }
         public DateTime pubdate { get; set; }
         public DateTime CreationDate { get; set; }
-        public string PubDateDisplay 
+        public DateTime StartDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public string StartDateDisplay
         {
-            get { return this.pubdate.ToString("dd/MM/yyyy"); }
+
+            get { return this.StartDate.ToString("dd/MM/yyyy"); }
+
         }
-        public string CreationDateDisplay 
-        { 
-            get { return this.CreationDate.ToString("dd/MM/yyyy"); }
+        public string CreationDateDisplay
+        {
+            get { return this.StartDate.ToString("dd/MM/yyyy"); }
+
         }
+
+
     }
 }
